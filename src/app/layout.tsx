@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
+import "./Layout.scss";
+import Navbar from "@/components/Layout/Navbar/Navbar";
+import Header from "@/components/Layout/Header/Header";
+import { ClerkProvider, SignedIn, currentUser } from "@clerk/nextjs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +22,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ClerkProvider
+          appearance={{
+            baseTheme: dark,
+          }}
+        >
+          <div className="layout flex w-full">
+            <Navbar />
+            <div className="layout__main flex-1">
+              <Header />
+              <div className="layout__main--outer bg-slate-200 p-4">
+                <ScrollArea className="layout__main--inner w-full rounded bg-mint-cream p-4 shadow-xl">
+                  {children}
+                </ScrollArea>
+              </div>
+            </div>
+          </div>
+        </ClerkProvider>
+      </body>
     </html>
   );
 }
