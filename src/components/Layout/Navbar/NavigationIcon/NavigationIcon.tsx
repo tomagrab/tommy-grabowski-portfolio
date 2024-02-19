@@ -12,7 +12,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const IconMap = {
-  blog: Home,
+  home: Home,
   about: HelpCircle,
   contact: AtSign,
   projects: NotebookPen,
@@ -22,17 +22,20 @@ const IconMap = {
 
 type NavigationIconProps = {
   iconName: keyof typeof IconMap;
-  to: string;
+  href: string;
 };
 
-export default function NavigationIcon({ iconName, to }: NavigationIconProps) {
+export default function NavigationIcon({
+  iconName,
+  href,
+}: NavigationIconProps) {
   const IconComponent = IconMap[iconName];
   const pathname = usePathname();
   return (
     <Link
-      href={to}
+      href={href}
       className={`group relative h-16 w-full ${
-        pathname === to || (pathname.includes(to) && to.length !== 1)
+        pathname === href || (pathname.includes(href) && href.length !== 1)
           ? "text-celestial-blue"
           : "text-slate-900"
       }`}
