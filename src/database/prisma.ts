@@ -9,7 +9,7 @@ import { PrismaClient } from "@prisma/client";
  */
 
 // Instantiate Prisma Client
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 // Define a main function to run your Prisma Client queries
 async function main() {
@@ -41,29 +41,41 @@ export const createBlogPost = async (
   content: string,
   author: string
 ) => {
-  const newPost = await prisma.blogPost.create({
-    data: {
-      title,
-      content,
-      author,
-    },
-  });
+  try {
+    const newPost = await prisma.blogPost.create({
+      data: {
+        title,
+        content,
+        author,
+      },
+    });
 
-  return newPost;
+    return newPost;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Get all blog posts
 export const getAllBlogPosts = async () => {
-  const posts = await prisma.blogPost.findMany();
-  return posts;
+  try {
+    const posts = await prisma.blogPost.findMany();
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Get a single blog post
 export const getBlogPost = async (id: number) => {
-  const post = await prisma.blogPost.findUnique({
-    where: { id },
-  });
-  return post;
+  try {
+    const post = await prisma.blogPost.findUnique({
+      where: { id },
+    });
+    return post;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Update a blog post
@@ -72,22 +84,30 @@ export const updateBlogPost = async (
   title: string,
   content: string
 ) => {
-  const updatedPost = await prisma.blogPost.update({
-    where: { id },
-    data: {
-      title,
-      content,
-    },
-  });
+  try {
+    const updatedPost = await prisma.blogPost.update({
+      where: { id },
+      data: {
+        title,
+        content,
+      },
+    });
 
-  return updatedPost;
+    return updatedPost;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // Delete a blog post
 export const deleteBlogPost = async (id: number) => {
-  const deletedPost = await prisma.blogPost.delete({
-    where: { id },
-  });
+  try {
+    const deletedPost = await prisma.blogPost.delete({
+      where: { id },
+    });
 
-  return deletedPost;
+    return deletedPost;
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -1,6 +1,5 @@
 "use client";
 import "@/components/Blog/NewBlog/NewBlogForm/NewBlogForm.scss";
-import { useUser } from "@clerk/clerk-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,8 +15,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { useUser } from "@clerk/nextjs";
+import { CreatePost } from "@/api/actions/BlogActions";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
-const NewBlogPostFormSchema = z.object({
+export const NewBlogPostFormSchema = z.object({
   title: z
     .string()
     .min(3, {
@@ -54,17 +57,7 @@ export default function NewBlogForm() {
 
   const onSubmit = async (data: z.infer<typeof NewBlogPostFormSchema>) => {
     try {
-      const response = await fetch("/api/CreateBlogPost", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        console.log("Post created successfully!");
-      } else {
-        throw new Error("Failed to create post");
-      }
+      await CreatePost(data);
     } catch (error) {
       console.error(error);
     }
