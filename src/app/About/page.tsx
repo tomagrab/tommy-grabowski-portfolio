@@ -1,9 +1,12 @@
 import "@/app/About/About.scss";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Github, Linkedin } from "lucide-react";
+import Link from "next/link";
 
 export default function About() {
   return (
-    <main className="bg-slate-800 rounded">
+    <main>
       <section className="about-section flex gap-4 flex-wrap md:flex-nowrap flex-col items-center md:flex-row md:items-stretch">
         <Card className="flex flex-col items-center py-4 backdrop-blur-xl">
           <CardHeader className="text-center mt-4">
@@ -29,11 +32,31 @@ export default function About() {
               into development has been driven by self-learning and a deep
               interest in creating engaging web experiences.
             </p>
-            <p>
+            <p className="">
               I specialize in crafting modern web applications using React,
-              Next.js, TailwindCSS, and SCSS. You can explore my work and
-              connect with me on GitHub (https://github.com/tomagrab).
+              Next.js, TailwindCSS, and SCSS.
             </p>
+          </CardContent>
+        </Card>
+
+        <Card className="flex flex-col items-center py-4 backdrop-blur-xl">
+          <CardHeader className="text-center mt-4">
+            <CardTitle>Socials</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-2">
+            <Link href="https://github.com/tomagrab" target="_blank">
+              <Badge className="flex items-center gap-2 bg-github-black hover:bg-github-black-light">
+                <Github /> GitHub
+              </Badge>
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/tommy-g-42399a1b2/"
+              target="_blank"
+            >
+              <Badge className="flex items-center gap-2 bg-linkedin-blue hover:bg-linkedin-blue-light">
+                <Linkedin /> LinkedIn
+              </Badge>
+            </Link>
           </CardContent>
         </Card>
       </section>
