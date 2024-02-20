@@ -71,6 +71,20 @@ export const getAllBlogPosts = async () => {
   }
 };
 
+// Get recent blog posts
+export const getRecentBlogs = async (numberOfBlogs: number) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: "desc" },
+      take: numberOfBlogs,
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // Get a single blog post
 export const getBlogPost = async (id: number) => {
   try {

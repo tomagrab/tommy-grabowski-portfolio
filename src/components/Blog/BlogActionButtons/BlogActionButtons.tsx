@@ -7,8 +7,8 @@ import type { UserResource } from "@clerk/types/dist/user";
 import { DeletePost } from "@/api/actions/BlogActions";
 
 type BlogActionButtonsProps = {
-  user: UserResource;
-  isAdministrator: boolean;
+  user?: UserResource;
+  isAdministrator?: boolean;
   post: BlogPost;
 };
 
