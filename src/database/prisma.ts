@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { remark } from "remark";
+import remarkHtml from "remark-html";
 
 /*
  * Prisma Client is auto-generated based on your Prisma schema.
@@ -59,8 +61,23 @@ export const createBlogPost = async (
 // Get all blog posts
 export const getAllBlogPosts = async () => {
   try {
-    const posts = await prisma.blogPost.findMany();
-    return posts;
+    const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    // Process Markdown for each post
+    const processedPosts = posts.map((post) => {
+      const processedContent = remark()
+        .use(remarkHtml)
+        .processSync(post.content);
+
+      return {
+        ...post,
+        content: processedContent.toString(),
+      };
+    });
+
+    return processedPosts;
   } catch (error) {
     console.error(error);
   }
@@ -72,6 +89,14 @@ export const getBlogPost = async (id: number) => {
     const post = await prisma.blogPost.findUnique({
       where: { id },
     });
+
+    if (!post) return null;
+
+    // Process Markdown for the post
+    const processedContent = remark().use(remarkHtml).processSync(post.content);
+
+    post.content = processedContent.toString();
+
     return post;
   } catch (error) {
     console.error(error);

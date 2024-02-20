@@ -10,8 +10,8 @@ export default function Navbar() {
       </div>
       <div className="navbar--desktop hidden md:flex md:flex-col md:items-center">
         <NavigationIcon iconName="home" href="/" />
+        <NavigationIcon iconName="blog" href="/Blog" />
         <NavigationIcon iconName="about" href="/About" />
-        <NavigationIcon iconName="contact" href="/Contact" />
         <NavigationIcon iconName="projects" href="/Projects" />
         <div className="flex h-16 items-center justify-center">
           <SignedIn>
@@ -24,7 +24,7 @@ export default function Navbar() {
       </div>
       <div className="navbar--mobile flex w-full items-center justify-between md:hidden">
         <NavigationIcon iconName="home" href="/" />
-        <NavigationIcon iconName="about" href="/About" />
+        <NavigationIcon iconName="blog" href="/Blog" />
         <div className="flex h-16 w-full items-center justify-center">
           <SignedIn>
             <UserButton />
@@ -33,7 +33,7 @@ export default function Navbar() {
             <NavigationIcon iconName="login" href="/LogIn" />
           </SignedOut>
         </div>
-        <NavigationIcon iconName="contact" href="/Contact" />
+        <NavigationIcon iconName="about" href="/About" />
         <NavigationIcon iconName="projects" href="/Projects" />
       </div>
     </aside>

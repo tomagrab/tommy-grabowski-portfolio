@@ -1,0 +1,13 @@
+.blog_post {
+  &--header {
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  &--content {
+    &__body {
+      font-size: 1.25rem;
+    }
+  }
+}

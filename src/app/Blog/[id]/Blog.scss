@@ -1,0 +1,55 @@
+.blog_post {
+  &--header {
+    &__title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &--content {
+    &__body {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+
+      & > a,
+      & > p > a {
+        color: #007bff;
+        border-bottom: 1px solid #007bff;
+      }
+
+      & > h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding: 2rem 0 1rem 0;
+      }
+
+      & > h3 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        padding: 1.5rem 0 1rem 0;
+      }
+
+      & > ul {
+        list-style-type: disc;
+        padding-left: 2rem;
+      }
+
+      & > ol {
+        list-style-type: decimal;
+        padding-left: 2rem;
+      }
+
+      & > blockquote {
+        border-left: 5px solid #f0f0f0;
+        padding: 0.5rem 1rem;
+        margin: 1rem 0;
+      }
+
+      & > pre {
+        margin: 1rem 0;
+      }
+    }
+  }
+}

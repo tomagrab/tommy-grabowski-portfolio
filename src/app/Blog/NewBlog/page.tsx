@@ -20,9 +20,9 @@ export default async function NewBlog() {
   return (
     <SignedIn>
       {isAdministrator && user ? (
-        <div>
+        <main>
           <NewBlogForm />
-        </div>
+        </main>
       ) : null}
     </SignedIn>
   );

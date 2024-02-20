@@ -17,8 +17,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@clerk/nextjs";
 import { CreatePost } from "@/api/actions/BlogActions";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export const NewBlogPostFormSchema = z.object({
   title: z
@@ -34,7 +32,7 @@ export const NewBlogPostFormSchema = z.object({
     .min(10, {
       message: "Content must be at least 10 characters long",
     })
-    .max(1000, {
+    .max(10000, {
       message: "Content must be at most 1000 characters long",
     }),
   author: z.string().min(3).max(100),
@@ -65,7 +63,10 @@ export default function NewBlogForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-full p-4  rounded-lg shadow-md"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -75,9 +76,6 @@ export default function NewBlogForm() {
               <FormControl>
                 <Input placeholder="Title" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -91,9 +89,6 @@ export default function NewBlogForm() {
               <FormControl>
                 <Textarea placeholder="Content" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -107,15 +102,14 @@ export default function NewBlogForm() {
               <FormControl>
                 <Input placeholder="Author" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <div className="self-center">
+          <Button type="submit">Create</Button>
+        </div>
       </form>
     </Form>
   );

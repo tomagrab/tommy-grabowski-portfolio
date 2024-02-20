@@ -20,7 +20,6 @@ export async function CreatePost(
   }
 
   const postId = newPost.id.toString();
-  console.log(typeof postId);
 
   if (!postId) {
     throw new Error("Failed to create post");

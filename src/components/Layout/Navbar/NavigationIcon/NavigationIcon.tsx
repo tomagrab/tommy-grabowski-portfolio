@@ -1,20 +1,20 @@
 "use client";
 import "@/components/Layout/Navbar/NavigationIcon/NavigationIcon.scss";
 import {
-  AtSign,
   HelpCircle,
   Home,
   NotebookPen,
   LogIn,
   LogOut,
+  MessageSquareText,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const IconMap = {
   home: Home,
+  blog: MessageSquareText,
   about: HelpCircle,
-  contact: AtSign,
   projects: NotebookPen,
   login: LogIn,
   logout: LogOut,
