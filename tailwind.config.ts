@@ -20,6 +20,7 @@ const config = {
     extend: {
       colors: {
         "crayola-red": "#ED254E",
+        "crayola-red-light": "#f03e62",
         "celestial-blue": "#3E92CC",
         "mint-cream": "#F4FFFD",
         "oxford-blue": "#011936",

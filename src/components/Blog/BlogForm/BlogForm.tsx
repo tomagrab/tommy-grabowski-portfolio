@@ -1,5 +1,5 @@
 "use client";
-import "@/components/Blog/NewBlog/NewBlogForm/NewBlogForm.scss";
+import "@/components/Blog/BlogForm/BlogForm.scss";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,36 +15,30 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useUser } from "@clerk/nextjs";
-import { CreatePost } from "@/api/actions/BlogActions";
+import { CreatePost, UpdatePost } from "@/api/actions/BlogActions";
+import { BlogPostFormSchema } from "@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema";
+import { BlogPost } from "@prisma/client";
+import { Dispatch, SetStateAction } from "react";
 
-export const NewBlogPostFormSchema = z.object({
-  title: z
-    .string()
-    .min(3, {
-      message: "Title must be at least 3 characters long",
-    })
-    .max(20, {
-      message: "Title must be at most 20 characters long",
-    }),
-  content: z
-    .string()
-    .min(10, {
-      message: "Content must be at least 10 characters long",
-    })
-    .max(10000, {
-      message: "Content must be at most 1000 characters long",
-    }),
-  author: z.string().min(3).max(100),
-});
+type BlogFormProps = {
+  post?: BlogPost;
+  editMode?: boolean;
+  setEditMode?: Dispatch<SetStateAction<boolean>>;
+};
 
-export default function NewBlogForm() {
+export default function BlogForm({
+  post,
+  editMode,
+  setEditMode,
+}: BlogFormProps) {
   const user = useUser().user;
-  const form = useForm<z.infer<typeof NewBlogPostFormSchema>>({
-    resolver: zodResolver(NewBlogPostFormSchema),
+  const form = useForm<z.infer<typeof BlogPostFormSchema>>({
+    resolver: zodResolver(BlogPostFormSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      title: post?.title || "",
+      content: post?.content || "",
       author:
+        post?.author ||
         user?.fullName ||
         user?.username ||
         user?.emailAddresses[0]?.emailAddress ||
@@ -53,13 +46,25 @@ export default function NewBlogForm() {
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof NewBlogPostFormSchema>) => {
-    try {
-      await CreatePost(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  let onSubmit;
+
+  if (post) {
+    onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
+      try {
+        await UpdatePost(post.id, data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  } else {
+    onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
+      try {
+        await CreatePost(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  }
 
   return (
     <Form {...form}>
@@ -108,7 +113,16 @@ export default function NewBlogForm() {
         />
 
         <div className="self-center">
-          <Button type="submit">Create</Button>
+          <Button
+            type="submit"
+            onClick={() => {
+              if (editMode && setEditMode) {
+                setEditMode(false);
+              }
+            }}
+          >
+            {post ? "Update Post" : "Create Post"}
+          </Button>
         </div>
       </form>
     </Form>

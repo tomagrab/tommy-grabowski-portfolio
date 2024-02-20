@@ -1,4 +1,5 @@
 import "@/app/Blog/[id]/Blog.scss";
+import BlogDisplay from "@/components/Blog/BlogDisplay/BlogDisplay";
 import { getBlogPost } from "@/database/prisma";
 import { currentUser } from "@clerk/nextjs";
 import type { BlogPost } from "@prisma/client";
@@ -18,6 +19,9 @@ export default async function BlogPost({
   searchParams,
 }: BlogPostProps) {
   const post = await getBlogPost(Number(params.id));
+  const user = await currentUser();
+  const isAdministrator =
+    user?.emailAddresses[0]?.emailAddress === process.env.ADMIN_EMAIL;
 
   if (!post) {
     return (
@@ -28,37 +32,22 @@ export default async function BlogPost({
     );
   }
 
-  return (
-    <main>
-      <div className="blog_post">
-        <div className="blog_post--header">
-          <h2 className="blog_post--header__title">{post?.title}</h2>
-        </div>
-        <div className="blog_post--content">
-          <div
-            className="blog_post--content__body"
-            dangerouslySetInnerHTML={{ __html: post?.content }}
-          />
-        </div>
-      </div>
-    </main>
-  );
-}
-
-const BlogPostHeader = async (post: BlogPost) => {
-  const user = await currentUser();
-
-  if (!user) {
+  if (searchParams?.editMode === "true" && user) {
     return (
-      <div className="blog_post--header">
-        <h2 className="blog_post--header__title">{post?.title}</h2>
-      </div>
+      <BlogDisplay
+        user={JSON.parse(JSON.stringify(user))}
+        isAdministrator={isAdministrator}
+        post={post}
+        isEditMode
+      />
     );
   }
 
   return (
-    <div className="blog_post--header">
-      <h2 className="blog_post--header__title">{post?.title}</h2>
-    </div>
+    <BlogDisplay
+      user={JSON.parse(JSON.stringify(user))}
+      isAdministrator={isAdministrator}
+      post={post}
+    />
   );
-};
+}

@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FormatDate } from "@/lib/Utilities/FormatDate/FormatDate";
+import { ConvertMarkdownToHTML } from "@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML";
 
 export default async function Blog() {
   const posts = await getAllBlogPosts();
@@ -35,7 +36,10 @@ export default async function Blog() {
                 <div
                   className="blog_post--content__body"
                   dangerouslySetInnerHTML={{
-                    __html: `${post.content.slice(0, 100)}...`,
+                    __html: `${ConvertMarkdownToHTML(post.content).slice(
+                      0,
+                      100
+                    )}...`,
                   }}
                 />
                 <div className="flex justify-between">

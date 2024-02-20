@@ -1,6 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { remark } from "remark";
-import remarkHtml from "remark-html";
 
 /*
  * Prisma Client is auto-generated based on your Prisma schema.
@@ -52,6 +50,8 @@ export const createBlogPost = async (
       },
     });
 
+    console.log(newPost);
+
     return newPost;
   } catch (error) {
     console.error(error);
@@ -65,19 +65,7 @@ export const getAllBlogPosts = async () => {
       orderBy: { createdAt: "desc" },
     });
 
-    // Process Markdown for each post
-    const processedPosts = posts.map((post) => {
-      const processedContent = remark()
-        .use(remarkHtml)
-        .processSync(post.content);
-
-      return {
-        ...post,
-        content: processedContent.toString(),
-      };
-    });
-
-    return processedPosts;
+    return posts;
   } catch (error) {
     console.error(error);
   }
@@ -91,11 +79,6 @@ export const getBlogPost = async (id: number) => {
     });
 
     if (!post) return null;
-
-    // Process Markdown for the post
-    const processedContent = remark().use(remarkHtml).processSync(post.content);
-
-    post.content = processedContent.toString();
 
     return post;
   } catch (error) {
@@ -115,6 +98,7 @@ export const updateBlogPost = async (
       data: {
         title,
         content,
+        updatedAt: new Date(),
       },
     });
 

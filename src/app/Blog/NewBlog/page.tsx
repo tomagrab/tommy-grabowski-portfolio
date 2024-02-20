@@ -1,5 +1,5 @@
 import "@/app/Blog/NewBlog/NewBlog.scss";
-import NewBlogForm from "@/components/Blog/NewBlog/NewBlogForm/NewBlogForm";
+import BlogForm from "@/components/Blog/BlogForm/BlogForm";
 import { redirect } from "next/navigation";
 import { SignedIn, currentUser } from "@clerk/nextjs";
 
@@ -21,7 +21,7 @@ export default async function NewBlog() {
     <SignedIn>
       {isAdministrator && user ? (
         <main>
-          <NewBlogForm />
+          <BlogForm />
         </main>
       ) : null}
     </SignedIn>
