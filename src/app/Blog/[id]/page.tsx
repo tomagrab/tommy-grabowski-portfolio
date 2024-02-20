@@ -3,6 +3,7 @@ import BlogDisplay from "@/components/Blog/BlogDisplay/BlogDisplay";
 import { getBlogPost } from "@/database/prisma";
 import { currentUser } from "@clerk/nextjs";
 import type { BlogPost } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 type BlogPostProps = {
   params: {
@@ -24,12 +25,7 @@ export default async function BlogPost({
     user?.emailAddresses[0]?.emailAddress === process.env.ADMIN_EMAIL;
 
   if (!post) {
-    return (
-      <main>
-        <h2>HOLY SHIT!</h2>
-        <h3>Post not found</h3>
-      </main>
-    );
+    return notFound();
   }
 
   if (searchParams?.editMode === "true" && user) {

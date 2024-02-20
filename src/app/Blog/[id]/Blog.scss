@@ -16,7 +16,10 @@
       & > a,
       & > p > a {
         color: #007bff;
-        border-bottom: 1px solid #007bff;
+
+        &:hover {
+          color: #0056b3;
+        }
       }
 
       & > h2 {
