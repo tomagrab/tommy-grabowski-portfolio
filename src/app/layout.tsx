@@ -4,7 +4,7 @@ import "./globals.scss";
 import "./Layout.scss";
 import Navbar from "@/components/Layout/Navbar/Navbar";
 import Header from "@/components/Layout/Header/Header";
-import { ClerkProvider, SignedIn, currentUser } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { dark } from "@clerk/themes";
 

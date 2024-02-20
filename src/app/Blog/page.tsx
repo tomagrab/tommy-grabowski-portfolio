@@ -24,7 +24,7 @@ export default async function Blog() {
       <BlogHeader />
 
       {posts && posts.length > 0 ? (
-        <Accordion type="multiple" className="flex flex-col gap-4">
+        <Accordion type="multiple" className="flex flex-col gap-4 bg-white">
           {posts.map((post, index) => (
             <AccordionItem
               className="blogs_post border rounded-lg p-4"
