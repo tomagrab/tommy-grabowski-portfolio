@@ -1,3 +1,4 @@
+import BadgeLink from '@/components/BadgeLink/BadgeLink';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
@@ -11,21 +12,24 @@ export default function AboutSocials() {
         <CardTitle>Connect with Me</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 md:grid md:grid-cols-2">
-        <Link href="https://github.com/tomagrab" target="_blank">
-          <Badge className="flex items-center justify-center gap-2 bg-github-black p-2 text-lg transition-all duration-200 hover:scale-105 hover:bg-github-black-light hover:shadow-md">
-            <FontAwesomeIcon icon={faGithub} className="h-6 w-6" />
-            GitHub
-          </Badge>
-        </Link>
-        <Link
-          href="https://www.linkedin.com/in/tommy-g-42399a1b2/"
-          target="_blank"
+        <BadgeLink
+          href="https://github.com/tomagrab"
+          badgeClassName={`
+        bg-github-black hover:bg-github-black-light
+        `}
         >
-          <Badge className="flex items-center justify-center gap-2 bg-linkedin-blue p-2 text-lg transition-all duration-200 hover:scale-105 hover:bg-linkedin-blue-light hover:shadow-md">
-            <FontAwesomeIcon icon={faLinkedin} className="h-6 w-6" />
-            LinkedIn
-          </Badge>
-        </Link>
+          <FontAwesomeIcon icon={faGithub} className="h-6 w-6" />
+          GitHub
+        </BadgeLink>
+        <BadgeLink
+          href="https://www.linkedin.com/in/tommy-g-42399a1b2/"
+          badgeClassName={`
+        bg-linkedin-blue hover:bg-linkedin-blue-light
+        `}
+        >
+          <FontAwesomeIcon icon={faLinkedin} className="h-6 w-6" />
+          LinkedIn
+        </BadgeLink>
       </CardContent>
     </Card>
   );

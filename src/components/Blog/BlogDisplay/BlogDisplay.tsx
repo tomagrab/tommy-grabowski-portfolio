@@ -97,7 +97,7 @@ const BlogPostHeader = ({
           <Badge
             className={`cursor-pointer ${
               editMode
-                ? 'bg-crayola-red hover:bg-crayola-red-light'
+                ? 'bg-yellow-500 hover:bg-yellow-400'
                 : 'bg-blue-500 hover:bg-blue-400'
             }  `}
             onClick={() => setEditMode(!editMode)}
