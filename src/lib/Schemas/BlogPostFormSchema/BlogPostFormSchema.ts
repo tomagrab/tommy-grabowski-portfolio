@@ -6,8 +6,8 @@ export const BlogPostFormSchema = z.object({
     .min(3, {
       message: 'Title must be at least 3 characters long',
     })
-    .max(30, {
-      message: 'Title must be at most 20 characters long',
+    .max(50, {
+      message: 'Title must be at most 50 characters long',
     }),
   content: z
     .string()

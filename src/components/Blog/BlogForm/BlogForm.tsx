@@ -1,10 +1,10 @@
-"use client";
-import "@/components/Blog/BlogForm/BlogForm.scss";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import '@/components/Blog/BlogForm/BlogForm.scss';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormControl,
@@ -12,13 +12,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { useUser } from "@clerk/nextjs";
-import { CreatePost, UpdatePost } from "@/api/actions/BlogActions";
-import { BlogPostFormSchema } from "@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema";
-import { BlogPost } from "@prisma/client";
-import { Dispatch, SetStateAction } from "react";
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { useUser } from '@clerk/nextjs';
+import { CreatePost, UpdatePost } from '@/api/actions/BlogActions';
+import { BlogPostFormSchema } from '@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema';
+import { BlogPost } from '@prisma/client';
+import { Dispatch, SetStateAction } from 'react';
 
 type BlogFormProps = {
   post?: BlogPost;
@@ -35,14 +35,14 @@ export default function BlogForm({
   const form = useForm<z.infer<typeof BlogPostFormSchema>>({
     resolver: zodResolver(BlogPostFormSchema),
     defaultValues: {
-      title: post?.title || "",
-      content: post?.content || "",
+      title: post?.title || '',
+      content: post?.content || '',
       author:
         post?.author ||
         user?.fullName ||
         user?.username ||
         user?.emailAddresses[0]?.emailAddress ||
-        "",
+        '',
     },
   });
 
@@ -52,6 +52,10 @@ export default function BlogForm({
     onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
       try {
         await UpdatePost(post.id, data);
+
+        if (editMode && setEditMode) {
+          setEditMode(false);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -70,7 +74,7 @@ export default function BlogForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-full p-4  rounded-lg shadow-md"
+        className="flex w-full flex-col gap-4 rounded-lg  p-4 shadow-md"
       >
         <FormField
           control={form.control}
@@ -113,16 +117,7 @@ export default function BlogForm({
         />
 
         <div className="self-center">
-          <Button
-            type="submit"
-            onClick={() => {
-              if (editMode && setEditMode) {
-                setEditMode(false);
-              }
-            }}
-          >
-            {post ? "Update Post" : "Create Post"}
-          </Button>
+          <Button type="submit">{post ? 'Update Post' : 'Create Post'}</Button>
         </div>
       </form>
     </Form>

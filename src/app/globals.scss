@@ -77,6 +77,6 @@
     @apply p-4;
   }
   pre {
-    @apply bg-charcoal p-4 rounded-lg text-white;
+    @apply whitespace-pre-wrap rounded-lg bg-charcoal p-4 text-white;
   }
 }

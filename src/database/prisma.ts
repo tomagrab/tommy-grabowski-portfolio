@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 /*
  * Prisma Client is auto-generated based on your Prisma schema.
@@ -21,7 +21,7 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
+  .catch(async e => {
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
@@ -39,7 +39,7 @@ main()
 export const createBlogPost = async (
   title: string,
   content: string,
-  author: string
+  author: string,
 ) => {
   try {
     const newPost = await prisma.blogPost.create({
@@ -60,7 +60,7 @@ export const createBlogPost = async (
 export const getAllBlogPosts = async () => {
   try {
     const posts = await prisma.blogPost.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     });
 
     return posts;
@@ -73,7 +73,7 @@ export const getAllBlogPosts = async () => {
 export const getRecentBlogs = async (numberOfBlogs: number) => {
   try {
     const posts = await prisma.blogPost.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       take: numberOfBlogs,
     });
 
@@ -102,7 +102,7 @@ export const getBlogPost = async (id: number) => {
 export const updateBlogPost = async (
   id: number,
   title: string,
-  content: string
+  content: string,
 ) => {
   try {
     const updatedPost = await prisma.blogPost.update({
