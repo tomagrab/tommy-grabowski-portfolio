@@ -15,13 +15,11 @@ export default async function Blog() {
   return (
     <main>
       <BlogHeader />
-      {user && posts ? (
-        <BlogsDisplay
-          user={user}
-          isAdministrator={isAdministrator}
-          posts={posts}
-        />
-      ) : null}
+      <BlogsDisplay
+        user={user}
+        isAdministrator={isAdministrator}
+        posts={posts}
+      />
     </main>
   );
 }

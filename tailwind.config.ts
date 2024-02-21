@@ -26,6 +26,8 @@ const config = {
         "oxford-blue": "#011936",
         "linkedin-blue": "#0077B5",
         "linkedin-blue-light": "#0A66C2",
+        "react-blue": "#61DBFB",
+        "react-blue-light": "#61DBFB",
         "github-black": "#333333",
         "github-black-light": "#24292E",
         charcoal: "#465362",

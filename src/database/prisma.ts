@@ -50,8 +50,6 @@ export const createBlogPost = async (
       },
     });
 
-    console.log(newPost);
-
     return newPost;
   } catch (error) {
     console.error(error);

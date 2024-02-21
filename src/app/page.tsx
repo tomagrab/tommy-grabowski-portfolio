@@ -50,7 +50,7 @@ export default async function Home() {
             </Link>
           </div>
 
-          <hr className="py-4" />
+          <hr className="my-4 border" />
 
           {/* List of ten most recent blogs */}
           <h3 className="text-xl font-bold text-center">Recent Blogs</h3>
