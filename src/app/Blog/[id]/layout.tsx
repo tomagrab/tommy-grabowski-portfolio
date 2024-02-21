@@ -7,16 +7,11 @@ type SingleBlogLayoutProps = {
   params: {
     id: string;
   };
-
-  searchParams?: {
-    editMode: string;
-  };
 };
 
-export async function generateMetadata(
-  { params, searchParams }: SingleBlogLayoutProps,
-  parent: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: SingleBlogLayoutProps): Promise<Metadata> {
   const id = params.id;
   const post = await getBlogPost(Number(id));
 
