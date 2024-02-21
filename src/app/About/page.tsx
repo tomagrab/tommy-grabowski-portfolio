@@ -29,8 +29,8 @@ export default function About() {
           </CardContent>
         </Card>
 
-        <div className="flex flex-wrap justify-center gap-4 md:flex-nowrap">
-          <Card className="flex w-1/2 flex-col items-center backdrop-blur-xl">
+        <div className="flex flex-wrap gap-4 md:flex-nowrap">
+          <Card className="flex w-full flex-col items-center backdrop-blur-xl md:w-1/2">
             <CardHeader className="mt-4 text-center">
               <CardTitle>Skills</CardTitle>
             </CardHeader>
@@ -69,7 +69,7 @@ export default function About() {
             </CardContent>
           </Card>
 
-          <Card className="flex w-1/2 flex-col items-center backdrop-blur-xl">
+          <Card className="flex w-full flex-col items-center backdrop-blur-xl md:w-1/2">
             <CardHeader className="mt-4 text-center">
               <CardTitle>Socials</CardTitle>
             </CardHeader>
