@@ -16,7 +16,7 @@ export default function Header() {
           <UserButton />
         </SignedIn>
         <SignedOut>
-          <NavigationIcon iconName="login" href="/LogIn" />
+          <NavigationIcon iconName="login" href="/LogIn" headerIcon={true} />
         </SignedOut>
       </div>
     </header>
