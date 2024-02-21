@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { Badge } from "@/components/ui/badge";
-import { BlogPost } from "@prisma/client";
-import Link from "next/link";
-import type { UserResource } from "@clerk/types/dist/user";
-import { DeletePost } from "@/api/actions/BlogActions";
+import '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons.scss';
+import { Badge } from '@/components/ui/badge';
+import { BlogPost } from '@prisma/client';
+import Link from 'next/link';
+import type { UserResource } from '@clerk/types/dist/user';
+import { DeletePost } from '@/api/actions/BlogActions';
 
 type BlogActionButtonsProps = {
   user?: UserResource;
@@ -18,7 +19,7 @@ export default function BlogActionButtons({
   post,
 }: BlogActionButtonsProps) {
   const onSubmit = async () => {
-    const confirmDelete = confirm("Are you sure you want to delete this post?");
+    const confirmDelete = confirm('Are you sure you want to delete this post?');
     if (!confirmDelete) return;
 
     try {
@@ -29,7 +30,7 @@ export default function BlogActionButtons({
   };
 
   return (
-    <div className={`${user && isAdministrator ? "flex gap-2" : ""}`}>
+    <div className={`${user && isAdministrator ? 'flex gap-2' : ''}`}>
       <Link href={`/Blog/${post.id}`}>
         <Badge className="bg-green-500 hover:bg-green-400">View</Badge>
       </Link>

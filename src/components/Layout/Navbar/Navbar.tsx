@@ -1,6 +1,6 @@
-import "@/components/Layout/Navbar/Navbar.scss";
-import NavigationIcon from "@/components/Layout/Navbar/NavigationIcon/NavigationIcon";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import '@/components/Layout/Navbar/Navbar.scss';
+import NavigationIcon from '@/components/Layout/Navbar/NavigationIcon/NavigationIcon';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function Navbar() {
   return (
@@ -13,14 +13,6 @@ export default function Navbar() {
         <NavigationIcon iconName="blog" href="/Blog" />
         <NavigationIcon iconName="about" href="/About" />
         <NavigationIcon iconName="projects" href="/Projects" />
-        <div className="flex h-16 items-center justify-center">
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          <SignedOut>
-            <NavigationIcon iconName="login" href="/LogIn" />
-          </SignedOut>
-        </div>
       </div>
       <div className="navbar--mobile flex w-full items-center justify-between md:hidden">
         <NavigationIcon iconName="home" href="/" />

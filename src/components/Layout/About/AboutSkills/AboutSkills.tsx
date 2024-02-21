@@ -1,4 +1,4 @@
-import '@/components/About/AboutSkills/AboutSkills.scss';
+import '@/components/Layout/About/AboutSkills/AboutSkills.scss';
 import BadgeLink from '@/components/BadgeLink/BadgeLink';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { faReact } from '@fortawesome/free-brands-svg-icons';
@@ -19,6 +19,16 @@ export default function AboutSkills() {
             width={100}
             height={24}
             className="h-6 w-24"
+            priority
+          />
+        </BadgeLink>
+        <BadgeLink href="https://vercel.com/">
+          <Image
+            src="/Images/vercel.svg"
+            alt="Vercel Logo"
+            width={100}
+            className="vercel-logo"
+            height={24}
             priority
           />
         </BadgeLink>
@@ -50,7 +60,6 @@ export default function AboutSkills() {
           <Image
             src="/Images/SASS-Logo-Color.svg"
             alt="Sass Logo"
-            className="fill-white"
             width={24}
             height={24}
             priority

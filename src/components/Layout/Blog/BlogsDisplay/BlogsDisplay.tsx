@@ -1,15 +1,15 @@
-import { BlogPost } from "@prisma/client";
+import '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay.scss';
+import { BlogPost } from '@prisma/client';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { FormatDate } from "@/lib/Utilities/FormatDate/FormatDate";
-import { ConvertMarkdownToHTML } from "@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML";
-import BlogActionButtons from "@/components/Blog/BlogActionButtons/BlogActionButtons";
-import { User } from "@clerk/backend/dist/types/api/resources/User";
-import "@/components/Blog/BlogsDisplay/BlogsDisplay.scss";
+} from '@/components/ui/accordion';
+import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
+import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
+import BlogActionButtons from '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons';
+import { User } from '@clerk/backend/dist/types/api/resources/User';
 
 type BlogsDisplayProps = {
   user?: User | null;
@@ -22,19 +22,28 @@ export default function BlogsDisplay({
   isAdministrator,
   posts,
 }: BlogsDisplayProps) {
+  const contentPreview = (content: string) => {
+    return `${ConvertMarkdownToHTML(content.slice(0, 100))}...`;
+  };
+
   return (
     <>
       {posts && posts.length > 0 ? (
         <Accordion type="multiple" className="flex flex-col gap-4 bg-white">
           {posts.map((post, index) => (
             <AccordionItem
-              className="blogs_post border rounded-lg p-4"
+              className="blogs_post rounded-lg border p-4"
               key={post.id}
               value={`index-${index}`}
             >
               <AccordionTrigger className="blogs_post--header">
                 <div className="flex flex-col items-start gap-2">
-                  <h4 className="blogs_post--header__title">{post.title}</h4>
+                  <div className="flex flex-col items-baseline gap-2">
+                    <h4 className="blogs_post--header__title">{post.title}</h4>
+                    <small>
+                      Written by {post.author} on {FormatDate(post.createdAt)}
+                    </small>
+                  </div>
                   <BlogActionButtons
                     user={JSON.parse(JSON.stringify(user))}
                     isAdministrator={isAdministrator}
@@ -46,17 +55,9 @@ export default function BlogsDisplay({
                 <div
                   className="blogs_post--content__body"
                   dangerouslySetInnerHTML={{
-                    __html: `${ConvertMarkdownToHTML(post.content).slice(
-                      0,
-                      100
-                    )}...`,
+                    __html: contentPreview(post.content),
                   }}
                 />
-                <div className="flex justify-between">
-                  <p>Author: {post.author}</p>
-                  <p>Published: {FormatDate(post.createdAt)}</p>
-                  <p>Updated: {FormatDate(post.updatedAt)}</p>
-                </div>
               </AccordionContent>
             </AccordionItem>
           ))}

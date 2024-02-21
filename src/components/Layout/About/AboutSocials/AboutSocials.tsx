@@ -1,9 +1,8 @@
+import '@/components/Layout/About/AboutSocials/AboutSocials.scss';
 import BadgeLink from '@/components/BadgeLink/BadgeLink';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
 
 export default function AboutSocials() {
   return (

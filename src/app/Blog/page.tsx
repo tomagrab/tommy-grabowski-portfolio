@@ -1,10 +1,10 @@
-import { getAllBlogPosts } from "@/database/prisma";
-import { currentUser } from "@clerk/nextjs";
-import Link from "next/link";
-import "@/app/Blog/Blogs.scss";
-import { Badge } from "@/components/ui/badge";
+import { getAllBlogPosts } from '@/database/prisma';
+import { currentUser } from '@clerk/nextjs';
+import Link from 'next/link';
+import '@/app/Blog/Blogs.scss';
+import { Badge } from '@/components/ui/badge';
 
-import BlogsDisplay from "@/components/Blog/BlogsDisplay/BlogsDisplay";
+import BlogsDisplay from '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay';
 
 export default async function Blog() {
   const posts = await getAllBlogPosts();

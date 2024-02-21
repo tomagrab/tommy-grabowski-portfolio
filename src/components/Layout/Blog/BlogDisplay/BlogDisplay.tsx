@@ -1,13 +1,14 @@
 'use client';
 
-import '@/components/Blog/BlogDisplay/BlogDisplay.scss';
+import '@/components/Layout/Blog/BlogDisplay/BlogDisplay.scss';
+import BlogForm from '@/components/Layout/Blog/BlogForm/BlogForm';
 import { Badge } from '@/components/ui/badge';
+import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
+import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
+import { DeletePost } from '@/api/actions/BlogActions';
 import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPost } from '@prisma/client';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import BlogForm from '@/components/Blog/BlogForm/BlogForm';
-import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
-import { DeletePost } from '@/api/actions/BlogActions';
 
 type BlogDisplayProps = {
   user: UserResource | null | undefined;
@@ -44,7 +45,7 @@ export default function BlogDisplay({
 
   return (
     <main>
-      <div className="blog_post">
+      <article className="blog_post">
         <BlogPostHeader
           user={user}
           isAdministrator={isAdministrator}
@@ -58,7 +59,7 @@ export default function BlogDisplay({
         ) : (
           <BlogPostContent post={post} />
         )}
-      </div>
+      </article>
     </main>
   );
 }
@@ -74,6 +75,12 @@ const BlogPostHeader = ({
     return (
       <div className="blog_post--header">
         <h2 className="blog_post--header__title">{post?.title}</h2>
+        <div>
+          <small>
+            Written by {post.author} on {FormatDate(post.createdAt)}
+          </small>
+          <small>Last updated on {FormatDate(post.updatedAt)}</small>
+        </div>
       </div>
     );
   }
@@ -91,7 +98,14 @@ const BlogPostHeader = ({
 
   return (
     <div className="blog_post--header flex items-center justify-between">
-      <h2 className="blog_post--header__title">{post?.title}</h2>
+      <div className="flex flex-col pb-4">
+        <h2 className="blog_post--header__title">{post?.title}</h2>
+        <small>
+          Written by <strong>{post.author}</strong> on{' '}
+          {FormatDate(post.createdAt)}
+        </small>
+        <small>Last updated on {FormatDate(post.updatedAt)}</small>
+      </div>
       {user && isAdministrator && (
         <div className="flex gap-2">
           <Badge

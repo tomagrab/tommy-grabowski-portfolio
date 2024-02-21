@@ -1,20 +1,21 @@
-import "@/app/Blog/NewBlog/NewBlog.scss";
-import BlogForm from "@/components/Blog/BlogForm/BlogForm";
-import { redirect } from "next/navigation";
-import { SignedIn, currentUser } from "@clerk/nextjs";
+import '@/app/Blog/NewBlog/NewBlog.scss';
+
+import { redirect } from 'next/navigation';
+import { SignedIn, currentUser } from '@clerk/nextjs';
+import BlogForm from '@/components/Layout/Blog/BlogForm/BlogForm';
 
 export default async function NewBlog() {
   const user = await currentUser();
 
   if (!user) {
-    redirect("/");
+    redirect('/');
   }
 
   const userEmail = user?.emailAddresses[0]?.emailAddress;
   const isAdministrator = userEmail === process.env.ADMIN_EMAIL;
 
   if (!isAdministrator) {
-    redirect("/");
+    redirect('/');
   }
 
   return (

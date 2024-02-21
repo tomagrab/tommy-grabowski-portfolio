@@ -1,5 +1,5 @@
 'use client';
-import '@/components/Blog/BlogForm/BlogForm.scss';
+import '@/components/Layout/Blog/BlogForm/BlogForm.scss';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

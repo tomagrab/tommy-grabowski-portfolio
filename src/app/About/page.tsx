@@ -1,7 +1,7 @@
 import '@/app/About/About.scss';
-import AboutMe from '@/components/About/AboutMe/AboutMe';
-import AboutSkills from '@/components/About/AboutSkills/AboutSkills';
-import AboutSocials from '@/components/About/AboutSocials/AboutSocials';
+import AboutMe from '@/components/Layout/About/AboutMe/AboutMe';
+import AboutSkills from '@/components/Layout/About/AboutSkills/AboutSkills';
+import AboutSocials from '@/components/Layout/About/AboutSocials/AboutSocials';
 
 export default function About() {
   return (

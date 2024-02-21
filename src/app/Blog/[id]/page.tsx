@@ -1,9 +1,9 @@
-import "@/app/Blog/[id]/Blog.scss";
-import BlogDisplay from "@/components/Blog/BlogDisplay/BlogDisplay";
-import { getBlogPost } from "@/database/prisma";
-import { currentUser } from "@clerk/nextjs";
-import type { BlogPost } from "@prisma/client";
-import { notFound } from "next/navigation";
+import '@/app/Blog/[id]/Blog.scss';
+import BlogDisplay from '@/components/Layout/Blog/BlogDisplay/BlogDisplay';
+import { getBlogPost } from '@/database/prisma';
+import { currentUser } from '@clerk/nextjs';
+import type { BlogPost } from '@prisma/client';
+import { notFound } from 'next/navigation';
 
 type BlogPostProps = {
   params: {
@@ -28,7 +28,7 @@ export default async function BlogPost({
     return notFound();
   }
 
-  if (searchParams?.editMode === "true" && user) {
+  if (searchParams?.editMode === 'true' && user) {
     return (
       <BlogDisplay
         user={JSON.parse(JSON.stringify(user))}
