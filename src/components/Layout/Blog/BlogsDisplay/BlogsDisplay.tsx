@@ -23,7 +23,14 @@ export default function BlogsDisplay({
   posts,
 }: BlogsDisplayProps) {
   const contentPreview = (content: string) => {
-    return `${ConvertMarkdownToHTML(content.slice(0, 100))}...`;
+    const convertedHTML = ConvertMarkdownToHTML(content);
+    const match = convertedHTML.match(/<[^>]*>(.{0,200})<[^>]*>/);
+
+    if (match) {
+      return match[0] + '...';
+    } else {
+      return convertedHTML.slice(0, 200) + '...';
+    }
   };
 
   return (
@@ -53,7 +60,7 @@ export default function BlogsDisplay({
               </AccordionTrigger>
               <AccordionContent className="blogs_post--content flex flex-col gap-4">
                 <div
-                  className="blogs_post--content__body"
+                  className="blogs_post--content__body select-none"
                   dangerouslySetInnerHTML={{
                     __html: contentPreview(post.content),
                   }}
