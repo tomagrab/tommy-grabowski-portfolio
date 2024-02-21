@@ -35,7 +35,7 @@ export default function About() {
               <CardTitle>Skills</CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
-              <Link href="https://reactjs.org/" target="_blank">
+              <Link href="https://react.dev/" target="_blank">
                 <Badge className="flex items-center justify-center gap-2 bg-react-blue p-2 text-lg transition-all duration-200 hover:scale-105 hover:bg-react-blue-light hover:shadow-md">
                   <FontAwesomeIcon icon={faReact} className="h-8 w-8" />
                   React
