@@ -5,10 +5,10 @@ import BlogForm from '@/components/Layout/Blog/BlogForm/BlogForm';
 import { Badge } from '@/components/ui/badge';
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
-import { DeletePost } from '@/api/actions/BlogActions/BlogActions';
 import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPost } from '@prisma/client';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import BlogDeleteButton from '../BlogDeleteButton/BlogDeleteButton';
 
 type BlogDisplayProps = {
   user: UserResource | null | undefined;
@@ -21,7 +21,7 @@ type BlogDisplayProps = {
 type BlogPostHeaderProps = {
   user: UserResource | null | undefined;
   isAdministrator: boolean;
-  isWriter: boolean;
+  isPostAuthor: boolean;
   post: BlogPost;
   editMode: boolean;
   setEditMode: Dispatch<SetStateAction<boolean>>;
@@ -34,17 +34,19 @@ type BlogPostContentProps = {
 export default function BlogDisplay({
   user,
   isAdministrator,
-  isWriter,
   post,
   isEditMode,
 }: BlogDisplayProps) {
   const [editMode, setEditMode] = useState<boolean>(isEditMode || false);
+  const userId = user?.id;
+  const postUserId = post?.userId;
+  const isPostAuthor = userId === postUserId;
 
   useEffect(() => {
-    if (!isAdministrator) {
+    if (!isAdministrator || !isPostAuthor) {
       setEditMode(false);
     }
-  }, [isAdministrator]);
+  }, [isAdministrator, isPostAuthor, userId, postUserId]);
 
   return (
     <main>
@@ -52,7 +54,7 @@ export default function BlogDisplay({
         <BlogPostHeader
           user={user}
           isAdministrator={isAdministrator}
-          isWriter={isWriter}
+          isPostAuthor={isPostAuthor}
           post={post}
           editMode={editMode}
           setEditMode={setEditMode}
@@ -71,12 +73,14 @@ export default function BlogDisplay({
 const BlogPostHeader = ({
   user,
   isAdministrator,
-  isWriter,
+  isPostAuthor,
   post,
   editMode,
   setEditMode,
 }: BlogPostHeaderProps) => {
-  if (!user || !isAdministrator) {
+  const isAdministratorOrPostAuthor = isAdministrator || isPostAuthor;
+
+  if (!user || !isAdministratorOrPostAuthor) {
     return (
       <div className="blog_post--header">
         <div className="flex flex-col pb-4">
@@ -91,17 +95,6 @@ const BlogPostHeader = ({
     );
   }
 
-  const onSubmit = async () => {
-    const confirmDelete = confirm('Are you sure you want to delete this post?');
-    if (!confirmDelete) return;
-
-    try {
-      await DeletePost(post.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <div className="blog_post--header flex items-center justify-between">
       <div className="flex flex-col pb-4">
@@ -112,7 +105,7 @@ const BlogPostHeader = ({
         </small>
         <small>Last updated on {FormatDate(post.updatedAt)}</small>
       </div>
-      {user && isAdministrator && (
+      {(user && isAdministrator) || (user && isPostAuthor) ? (
         <div className="flex gap-2">
           <Badge
             className={`cursor-pointer ${
@@ -124,14 +117,9 @@ const BlogPostHeader = ({
           >
             {editMode ? 'Cancel' : 'Edit'}
           </Badge>
-          <Badge
-            onClick={onSubmit}
-            className="cursor-pointer bg-red-500 hover:bg-red-400"
-          >
-            Delete
-          </Badge>
+          <BlogDeleteButton post={post} />
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

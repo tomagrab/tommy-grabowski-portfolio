@@ -23,8 +23,8 @@ export default async function BlogPost({
   const post = await getBlogPost(Number(params.id));
   const user = await currentUser();
   const { has } = auth();
-  const isAdministrator = has({ role: 'admin' });
-  const isWriter = has({ role: 'writer' });
+  const isAdministrator = has({ role: 'org:admin' });
+  const isWriter = has({ role: 'org:writer' });
 
   if (!post) {
     return notFound();
