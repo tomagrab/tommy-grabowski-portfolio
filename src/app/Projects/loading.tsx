@@ -9,7 +9,13 @@ export default function Loading() {
       <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
         {/* Create array of 9 loading cards */}
         {Array.from({ length: 9 }).map((_, index) => (
-          <LoadingCard key={index} />
+          <LoadingCard
+            key={index}
+            cardHeaderSkeletonClassName="h-6 w-full rounded-md py-4"
+            numberOfCardHeaderSkeletons={1}
+            cardContentSkeletonClassName="h-4 w-full rounded-md"
+            numberOfCardContentSkeletons={3}
+          />
         ))}
       </div>
     </main>

@@ -16,7 +16,14 @@ export default function Header() {
           Tommy Grabowski
         </h1>
         <div className="flex h-full items-center justify-center md:hidden">
-          <OrganizationSwitcher />
+          <SignedOut>
+            <h1 className="header--text text-2xl font-bold text-celestial-blue">
+              Tommy Grabowski
+            </h1>
+          </SignedOut>
+          <SignedIn>
+            <OrganizationSwitcher />
+          </SignedIn>
         </div>
       </div>
       <div className="flex w-1/2 justify-end gap-2 px-4">

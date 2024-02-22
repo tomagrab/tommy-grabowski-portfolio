@@ -48,7 +48,8 @@ export default function BlogsDisplay({
                   <div className="flex flex-col items-baseline gap-2">
                     <h4 className="blogs_post--header__title">{post.title}</h4>
                     <small>
-                      Written by {post.author} on {FormatDate(post.createdAt)}
+                      Written by <strong>{post.author}</strong> on{' '}
+                      {FormatDate(post.createdAt)}
                     </small>
                   </div>
                   <BlogActionButtons
