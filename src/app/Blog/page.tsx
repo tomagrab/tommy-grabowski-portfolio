@@ -5,6 +5,7 @@ import '@/app/Blog/Blogs.scss';
 import { Badge } from '@/components/ui/badge';
 
 import BlogsDisplay from '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay';
+import { Organization, auth } from '@clerk/nextjs/server';
 
 export default async function Blog() {
   const posts = await getAllBlogPosts();
@@ -26,8 +27,10 @@ export default async function Blog() {
 
 const BlogHeader = async () => {
   const user = await currentUser();
-  const isAdmin =
-    user?.emailAddresses[0]?.emailAddress === process.env.ADMIN_EMAIL;
+  const { has } = auth();
+  const isAdmin = has({
+    role: 'org:admin',
+  });
 
   if (!user || !isAdmin) {
     return (

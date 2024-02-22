@@ -1,5 +1,10 @@
 import '@/components/Layout/Header/Header.scss';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import {
+  OrganizationSwitcher,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs';
 import NavigationIcon from '@/components/Layout/Navbar/NavigationIcon/NavigationIcon';
 
 export default function Header() {
@@ -13,6 +18,7 @@ export default function Header() {
       </div>
       <div className="flex w-1/2 justify-end px-4">
         <SignedIn>
+          <OrganizationSwitcher />
           <UserButton />
         </SignedIn>
         <SignedOut>
