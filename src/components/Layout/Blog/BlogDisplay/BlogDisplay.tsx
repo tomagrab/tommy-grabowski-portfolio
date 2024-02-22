@@ -74,8 +74,8 @@ const BlogPostHeader = ({
   if (!user || !isAdministrator) {
     return (
       <div className="blog_post--header">
-        <h2 className="blog_post--header__title">{post?.title}</h2>
-        <div>
+        <div className="flex flex-col pb-4">
+          <h2 className="blog_post--header__title">{post?.title}</h2>
           <small>
             Written by {post.author} on {FormatDate(post.createdAt)}
           </small>
