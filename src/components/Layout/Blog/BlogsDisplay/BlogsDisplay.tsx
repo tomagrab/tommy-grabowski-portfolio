@@ -36,10 +36,10 @@ export default function BlogsDisplay({
   return (
     <>
       {posts && posts.length > 0 ? (
-        <Accordion type="multiple" className="flex flex-col gap-4 bg-white">
+        <Accordion type="multiple" className="flex flex-col gap-4 ">
           {posts.map((post, index) => (
             <AccordionItem
-              className="blogs_post rounded-lg border p-4"
+              className="blogs_post rounded-lg border bg-white p-4"
               key={post.id}
               value={`index-${index}`}
             >

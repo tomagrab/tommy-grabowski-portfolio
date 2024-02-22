@@ -74,7 +74,7 @@ export default function BlogForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-4 rounded-lg  p-4 shadow-md"
+        className="flex w-full flex-col gap-4 rounded-lg bg-white p-4 shadow-md"
       >
         <FormField
           control={form.control}

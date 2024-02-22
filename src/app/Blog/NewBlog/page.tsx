@@ -21,9 +21,14 @@ export default async function NewBlog() {
     <SignedIn>
       {user && isAdministratorOrWriter ? (
         <main>
+          <NewBlogHeader />
           <BlogForm />
         </main>
       ) : null}
     </SignedIn>
   );
+}
+
+function NewBlogHeader() {
+  return <h2 className="pb-4 text-lg font-bold">New Blog</h2>;
 }

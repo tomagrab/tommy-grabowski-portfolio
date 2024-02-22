@@ -13,8 +13,8 @@ export default function LogIn() {
 
 function LogInHeader() {
   return (
-    <header>
+    <div>
       <h2 className="pb-4 text-lg font-bold">Log In</h2>
-    </header>
+    </div>
   );
 }
