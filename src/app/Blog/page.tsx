@@ -31,8 +31,13 @@ const BlogHeader = async () => {
   const isAdmin = has({
     role: 'org:admin',
   });
+  const isWriter = has({
+    role: 'org:writer',
+  });
 
-  if (!user || !isAdmin) {
+  const isWriterOrAdmin = isAdmin || isWriter;
+
+  if (!user || !isWriterOrAdmin) {
     return (
       <div>
         <h2 className="pb-4 text-lg font-bold">Blog</h2>

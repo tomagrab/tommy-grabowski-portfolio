@@ -1,3 +1,4 @@
+import { currentUser } from '@clerk/nextjs';
 import { PrismaClient } from '@prisma/client';
 
 /*
@@ -45,9 +46,18 @@ export const createBlogPost = async (
   content: string,
   author: string,
 ) => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error('You must be logged in to create a post');
+  }
+
+  const userId = user?.id;
+
   try {
     const newPost = await prisma.blogPost.create({
       data: {
+        userId,
         title,
         content,
         author,
