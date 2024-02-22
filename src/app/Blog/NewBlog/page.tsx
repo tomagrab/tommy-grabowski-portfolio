@@ -3,24 +3,25 @@ import '@/app/Blog/NewBlog/NewBlog.scss';
 import { redirect } from 'next/navigation';
 import { SignedIn, currentUser } from '@clerk/nextjs';
 import BlogForm from '@/components/Layout/Blog/BlogForm/BlogForm';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function NewBlog() {
   const user = await currentUser();
+  const { has } = auth();
+  const isAdministrator = has({ role: 'org:admin' });
+  const isWriter = has({ role: 'org:writer' });
 
-  if (!user) {
-    redirect('/');
-  }
+  const isAdministratorOrWriter = isAdministrator || isWriter;
 
-  const userEmail = user?.emailAddresses[0]?.emailAddress;
-  const isAdministrator = userEmail === process.env.ADMIN_EMAIL;
+  console.log('isAdministratorOrWriter', isAdministratorOrWriter);
 
-  if (!isAdministrator) {
-    redirect('/');
+  if (!user || !isAdministratorOrWriter) {
+    redirect('/Blog');
   }
 
   return (
     <SignedIn>
-      {isAdministrator && user ? (
+      {user && isAdministratorOrWriter ? (
         <main>
           <BlogForm />
         </main>

@@ -13,6 +13,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 type BlogDisplayProps = {
   user: UserResource | null | undefined;
   isAdministrator: boolean;
+  isWriter: boolean;
   post: BlogPost;
   isEditMode?: boolean;
 };
@@ -20,6 +21,7 @@ type BlogDisplayProps = {
 type BlogPostHeaderProps = {
   user: UserResource | null | undefined;
   isAdministrator: boolean;
+  isWriter: boolean;
   post: BlogPost;
   editMode: boolean;
   setEditMode: Dispatch<SetStateAction<boolean>>;
@@ -32,6 +34,7 @@ type BlogPostContentProps = {
 export default function BlogDisplay({
   user,
   isAdministrator,
+  isWriter,
   post,
   isEditMode,
 }: BlogDisplayProps) {
@@ -49,6 +52,7 @@ export default function BlogDisplay({
         <BlogPostHeader
           user={user}
           isAdministrator={isAdministrator}
+          isWriter={isWriter}
           post={post}
           editMode={editMode}
           setEditMode={setEditMode}
@@ -67,6 +71,7 @@ export default function BlogDisplay({
 const BlogPostHeader = ({
   user,
   isAdministrator,
+  isWriter,
   post,
   editMode,
   setEditMode,

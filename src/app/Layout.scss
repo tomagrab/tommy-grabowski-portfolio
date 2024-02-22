@@ -2,7 +2,7 @@
   min-height: 100dvh;
   &__main {
     &--inner {
-      height: calc(100dvh - 10rem);
+      @apply h-[calc(100dvh-10rem)] md:h-[calc(100dvh-6rem)];
     }
   }
 }

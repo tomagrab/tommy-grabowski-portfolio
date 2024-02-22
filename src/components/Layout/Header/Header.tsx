@@ -29,7 +29,9 @@ export default function Header() {
           </div>
         </SignedIn>
         <SignedOut>
-          <NavigationIcon iconName="login" href="/LogIn" headerIcon={true} />
+          <div className="hidden md:flex">
+            <NavigationIcon iconName="login" href="/LogIn" headerIcon={true} />
+          </div>
         </SignedOut>
       </div>
     </header>

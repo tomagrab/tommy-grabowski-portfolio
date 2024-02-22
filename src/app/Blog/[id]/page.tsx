@@ -2,6 +2,7 @@ import '@/app/Blog/[id]/Blog.scss';
 import BlogDisplay from '@/components/Layout/Blog/BlogDisplay/BlogDisplay';
 import { getBlogPost } from '@/database/prisma';
 import { currentUser } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import type { BlogPost } from '@prisma/client';
 import { notFound } from 'next/navigation';
 
@@ -21,8 +22,9 @@ export default async function BlogPost({
 }: BlogPostProps) {
   const post = await getBlogPost(Number(params.id));
   const user = await currentUser();
-  const isAdministrator =
-    user?.emailAddresses[0]?.emailAddress === process.env.ADMIN_EMAIL;
+  const { has } = auth();
+  const isAdministrator = has({ role: 'admin' });
+  const isWriter = has({ role: 'writer' });
 
   if (!post) {
     return notFound();
@@ -33,6 +35,7 @@ export default async function BlogPost({
       <BlogDisplay
         user={JSON.parse(JSON.stringify(user))}
         isAdministrator={isAdministrator}
+        isWriter={isWriter}
         post={post}
         isEditMode
       />
@@ -43,6 +46,7 @@ export default async function BlogPost({
     <BlogDisplay
       user={JSON.parse(JSON.stringify(user))}
       isAdministrator={isAdministrator}
+      isWriter={isWriter}
       post={post}
     />
   );
