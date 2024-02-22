@@ -13,8 +13,6 @@ export default async function NewBlog() {
 
   const isAdministratorOrWriter = isAdministrator || isWriter;
 
-  console.log('isAdministratorOrWriter', isAdministratorOrWriter);
-
   if (!user || !isAdministratorOrWriter) {
     redirect('/Blog');
   }

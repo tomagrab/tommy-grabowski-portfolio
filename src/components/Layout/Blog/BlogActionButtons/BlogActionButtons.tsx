@@ -1,11 +1,11 @@
 'use client';
 
 import '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons.scss';
+import BlogDeleteButton from '@/components/Layout/Blog/BlogDeleteButton/BlogDeleteButton';
 import { Badge } from '@/components/ui/badge';
 import { BlogPost } from '@prisma/client';
 import Link from 'next/link';
 import type { UserResource } from '@clerk/types/dist/user';
-import { DeletePost } from '@/api/actions/BlogActions/BlogActions';
 
 type BlogActionButtonsProps = {
   user?: UserResource;
@@ -18,32 +18,21 @@ export default function BlogActionButtons({
   isAdministrator,
   post,
 }: BlogActionButtonsProps) {
-  const deleteBlog = async () => {
-    const confirmDelete = confirm('Are you sure you want to delete this post?');
-    if (!confirmDelete) return;
-
-    try {
-      await DeletePost(post.id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  const isPostAuthor = user?.id === post.userId;
+  const isAdministratorOrAuthor = isAdministrator || isPostAuthor;
   return (
-    <div className={`${user && isAdministrator ? 'flex gap-2' : ''}`}>
+    <div className={`${user && isAdministratorOrAuthor ? 'flex gap-2' : ''}`}>
       <Link href={`/Blog/${post.id}`}>
         <Badge className="bg-green-500 hover:bg-green-400">View</Badge>
       </Link>
-      {user && isAdministrator ? (
+      {user && isAdministratorOrAuthor ? (
         <>
           <Link href={`/Blog/${post.id}?editMode=true`}>
             <Badge className="bg-blue-500 hover:bg-blue-400">Edit</Badge>
           </Link>
 
           <div>
-            <Badge onClick={deleteBlog} className="bg-red-500 hover:bg-red-400">
-              Delete
-            </Badge>
+            <BlogDeleteButton post={post} />
           </div>
         </>
       ) : null}
