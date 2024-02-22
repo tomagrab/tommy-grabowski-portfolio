@@ -5,10 +5,21 @@ import HomeProjects from '@/components/Layout/Home/HomeProjects/HomeProjects';
 
 export default async function Home() {
   return (
-    <main className="flex flex-col gap-4">
-      <HomeAbout />
-      <HomeBlog />
-      <HomeProjects />
+    <main>
+      <HomeHeader />
+      <div className="flex flex-col gap-4">
+        <HomeAbout />
+        <HomeBlog />
+        <HomeProjects />
+      </div>
     </main>
+  );
+}
+
+function HomeHeader() {
+  return (
+    <div>
+      <h2 className="pb-4 text-lg font-bold">Home</h2>
+    </div>
   );
 }

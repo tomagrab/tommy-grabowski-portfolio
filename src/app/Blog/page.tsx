@@ -32,14 +32,14 @@ const BlogHeader = async () => {
   if (!user || !isAdmin) {
     return (
       <div>
-        <h2 className="pb-4">Blog</h2>
+        <h2 className="pb-4 text-lg font-bold">Blog</h2>
       </div>
     );
   }
 
   return (
     <div className="flex justify-between">
-      <h2 className="pb-4">Blog</h2>
+      <h2 className="pb-4 text-lg font-bold">Blog</h2>
       <Link href="/Blog/NewBlog">
         <Badge>New Post</Badge>
       </Link>

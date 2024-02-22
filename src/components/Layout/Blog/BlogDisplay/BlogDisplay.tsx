@@ -5,7 +5,7 @@ import BlogForm from '@/components/Layout/Blog/BlogForm/BlogForm';
 import { Badge } from '@/components/ui/badge';
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
-import { DeletePost } from '@/api/actions/BlogActions';
+import { DeletePost } from '@/api/actions/BlogActions/BlogActions';
 import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPost } from '@prisma/client';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

@@ -35,6 +35,10 @@ main()
  * Delete: Delete a record from your database
  */
 
+/*
+ * Blog Post CRUD
+ */
+
 // Create a new blog post
 export const createBlogPost = async (
   title: string,
@@ -128,6 +132,89 @@ export const deleteBlogPost = async (id: number) => {
     });
 
     return deletedPost;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*
+ * To do CRUD
+ */
+
+// Create a new to do
+export const createTodo = async (title: string, content: string) => {
+  try {
+    const newTodo = await prisma.todo.create({
+      data: {
+        title,
+        content,
+      },
+    });
+
+    return newTodo;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get all to dos
+export const getAllTodos = async () => {
+  try {
+    const toDos = await prisma.todo.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return toDos;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get a single to do
+export const getTodo = async (id: number) => {
+  try {
+    const toDo = await prisma.todo.findUnique({
+      where: { id },
+    });
+
+    if (!toDo) return null;
+
+    return toDo;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Update a to do
+export const updateTodo = async (
+  id: number,
+  title: string,
+  content: string,
+) => {
+  try {
+    const updatedTodo = await prisma.todo.update({
+      where: { id },
+      data: {
+        title,
+        content,
+        updatedAt: new Date(),
+      },
+    });
+
+    return updatedTodo;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Delete a to do
+export const deleteTodo = async (id: number) => {
+  try {
+    const deletedTodo = await prisma.todo.delete({
+      where: { id },
+    });
+
+    return deletedTodo;
   } catch (error) {
     console.error(error);
   }

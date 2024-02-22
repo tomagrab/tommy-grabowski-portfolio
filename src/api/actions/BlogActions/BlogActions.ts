@@ -3,9 +3,9 @@
 import { BlogPostFormSchema } from '@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema';
 import {
   createBlogPost,
-  deleteBlogPost,
   getBlogPost,
   updateBlogPost,
+  deleteBlogPost,
 } from '@/database/prisma';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';

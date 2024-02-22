@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { BlogPost } from '@prisma/client';
 import Link from 'next/link';
 import type { UserResource } from '@clerk/types/dist/user';
-import { DeletePost } from '@/api/actions/BlogActions';
+import { DeletePost } from '@/api/actions/BlogActions/BlogActions';
 
 type BlogActionButtonsProps = {
   user?: UserResource;
@@ -18,7 +18,7 @@ export default function BlogActionButtons({
   isAdministrator,
   post,
 }: BlogActionButtonsProps) {
-  const onSubmit = async () => {
+  const deleteBlog = async () => {
     const confirmDelete = confirm('Are you sure you want to delete this post?');
     if (!confirmDelete) return;
 
@@ -41,7 +41,7 @@ export default function BlogActionButtons({
           </Link>
 
           <div>
-            <Badge onClick={onSubmit} className="bg-red-500 hover:bg-red-400">
+            <Badge onClick={deleteBlog} className="bg-red-500 hover:bg-red-400">
               Delete
             </Badge>
           </div>

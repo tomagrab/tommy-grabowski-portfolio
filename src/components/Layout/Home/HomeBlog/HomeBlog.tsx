@@ -7,7 +7,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
 export default async function HomeBlog() {
-  const posts = await getRecentBlogs(10);
+  const posts = await getRecentBlogs(3);
   const user = await currentUser();
   const isAdministrator =
     user?.emailAddresses[0]?.emailAddress === process.env.ADMIN_EMAIL;
@@ -31,7 +31,7 @@ export default async function HomeBlog() {
           <hr className="my-4 border" />
 
           {/* List of ten most recent blogs */}
-          <h3 className="text-center text-xl font-bold">Recent Blogs</h3>
+          <h3 className="pb-4 text-center text-xl font-bold">Recent Blogs</h3>
           <BlogsDisplay
             user={user}
             isAdministrator={isAdministrator}

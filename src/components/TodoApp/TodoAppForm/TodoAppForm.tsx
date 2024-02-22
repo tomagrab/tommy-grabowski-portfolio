@@ -1,5 +1,5 @@
 'use client';
-import '@/components/Layout/Blog/BlogForm/BlogForm.scss';
+import '@/components/TodoApp/TodoAppForm/TodoAppForm.scss';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,44 +14,44 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Textarea } from '@/components/ui/textarea';
-import { useUser } from '@clerk/nextjs';
-import { CreatePost, UpdatePost } from '@/api/actions/BlogActions/BlogActions';
-import { BlogPostFormSchema } from '@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema';
-import { BlogPost } from '@prisma/client';
-import { Dispatch, SetStateAction } from 'react';
+import {
+  CreateTodo,
+  UpdateTodo,
+} from '@/api/actions/TodoAppActions/TodoAppActions';
+import { Todo } from '@prisma/client';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { TodoAppFormSchema } from '@/lib/Schemas/TodoAppFormSchema/TodoAppFormSchema';
 
-type BlogFormProps = {
-  post?: BlogPost;
+type TodoAppFormProps = {
+  todo?: Todo;
   editMode?: boolean;
   setEditMode?: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function BlogForm({
-  post,
+export default function TodoAppForm({
+  todo,
   editMode,
   setEditMode,
-}: BlogFormProps) {
-  const user = useUser().user;
-  const form = useForm<z.infer<typeof BlogPostFormSchema>>({
-    resolver: zodResolver(BlogPostFormSchema),
+}: TodoAppFormProps) {
+  const [loading, setLoading] = useState(false);
+  const form = useForm<z.infer<typeof TodoAppFormSchema>>({
+    resolver: zodResolver(TodoAppFormSchema),
     defaultValues: {
-      title: post?.title || '',
-      content: post?.content || '',
-      author:
-        post?.author ||
-        user?.fullName ||
-        user?.username ||
-        user?.emailAddresses[0]?.emailAddress ||
-        '',
+      title: todo?.title || '',
+      content: todo?.content || '',
     },
   });
 
   let onSubmit;
 
-  if (post) {
-    onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
+  if (todo) {
+    onSubmit = async (data: z.infer<typeof TodoAppFormSchema>) => {
+      if (!loading) {
+        setLoading(true);
+      }
+
       try {
-        await UpdatePost(post.id, data);
+        await UpdateTodo(todo.id, data);
 
         if (editMode && setEditMode) {
           setEditMode(false);
@@ -59,14 +59,24 @@ export default function BlogForm({
       } catch (error) {
         console.error(error);
       }
+
+      form.reset();
+      setLoading(false);
     };
   } else {
-    onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
+    onSubmit = async (data: z.infer<typeof TodoAppFormSchema>) => {
+      if (!loading) {
+        setLoading(true);
+      }
+
       try {
-        await CreatePost(data);
+        await CreateTodo(data);
       } catch (error) {
         console.error(error);
       }
+
+      form.reset();
+      setLoading(false);
     };
   }
 
@@ -74,7 +84,7 @@ export default function BlogForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-4 rounded-lg  p-4 shadow-md"
+        className="flex w-full flex-col gap-4 rounded-lg"
       >
         <FormField
           control={form.control}
@@ -102,22 +112,10 @@ export default function BlogForm({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="author"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Author</FormLabel>
-              <FormControl>
-                <Input placeholder="Author" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div className="self-center">
-          <Button type="submit">{post ? 'Update Post' : 'Create Post'}</Button>
+          <Button type="submit" disabled={loading}>
+            {todo ? 'Update Post' : loading ? 'Creating...' : 'Create Todo'}
+          </Button>
         </div>
       </form>
     </Form>

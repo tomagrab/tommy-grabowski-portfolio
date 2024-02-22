@@ -6,6 +6,7 @@ import AboutSocials from '@/components/Layout/About/AboutSocials/AboutSocials';
 export default function About() {
   return (
     <main>
+      <AboutHeader />
       <section className="about-section flex flex-col gap-4">
         <AboutMe />
         <div className="flex flex-wrap gap-4 md:flex-nowrap">
@@ -14,5 +15,13 @@ export default function About() {
         </div>
       </section>
     </main>
+  );
+}
+
+function AboutHeader() {
+  return (
+    <div>
+      <h2 className="pb-4 text-lg font-bold">About</h2>
+    </div>
   );
 }
