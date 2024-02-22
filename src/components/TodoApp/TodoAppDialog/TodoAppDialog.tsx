@@ -48,6 +48,7 @@ export default function TodoAppDialog({
         <DialogDescription>
           {!editMode ? (
             <div
+              className="markdown"
               dangerouslySetInnerHTML={{
                 __html: ConvertMarkdownToHTML(todo.content),
               }}

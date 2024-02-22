@@ -80,3 +80,68 @@
     @apply whitespace-pre-wrap rounded-lg bg-charcoal p-4 text-white;
   }
 }
+
+.markdown {
+  @apply text-base leading-7;
+
+  & > a,
+  & > p > a {
+    @apply text-[#007bff];
+
+    &:hover {
+      @apply text-[#0056b3];
+    }
+  }
+
+  & > h2 {
+    @apply text-2xl font-bold;
+  }
+
+  & > h3 {
+    @apply text-xl font-bold;
+  }
+
+  & > h4 {
+    @apply text-lg font-bold;
+  }
+
+  & > h5 {
+    @apply text-base font-bold;
+  }
+
+  & > h6 {
+    @apply text-sm font-bold;
+  }
+
+  & > ul {
+    @apply list-disc py-2 pl-8;
+
+    & > li {
+      @apply pb-2;
+
+      & > ol {
+        @apply list-decimal py-2 pl-8;
+      }
+    }
+  }
+
+  & > ol {
+    @apply list-decimal py-2 pl-8;
+
+    & > li {
+      @apply pb-2;
+
+      & > ul {
+        @apply list-disc py-2 pl-8;
+      }
+    }
+  }
+
+  & > blockquote {
+    @apply my-4 border-l-4 border-primary-foreground bg-primary-foreground bg-opacity-10 p-4;
+  }
+
+  & > pre {
+    @apply my-4;
+  }
+}

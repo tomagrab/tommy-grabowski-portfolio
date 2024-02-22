@@ -61,7 +61,7 @@ export default function BlogsDisplay({
               </AccordionTrigger>
               <AccordionContent className="blogs_post--content flex flex-col gap-4">
                 <div
-                  className="blogs_post--content__body select-none"
+                  className="markdown select-none"
                   dangerouslySetInnerHTML={{
                     __html: contentPreview(post.content),
                   }}

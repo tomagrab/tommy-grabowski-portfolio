@@ -128,7 +128,7 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
   return (
     <div className="blog_post--content">
       <div
-        className="blog_post--content__body"
+        className="markdown select-none"
         dangerouslySetInnerHTML={{
           __html: ConvertMarkdownToHTML(post?.content),
         }}
