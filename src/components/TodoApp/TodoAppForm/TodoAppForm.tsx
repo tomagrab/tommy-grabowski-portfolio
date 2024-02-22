@@ -114,7 +114,13 @@ export default function TodoAppForm({
         />
         <div className="self-center">
           <Button type="submit" disabled={loading}>
-            {todo ? 'Update Post' : loading ? 'Creating...' : 'Create Todo'}
+            {todo && loading
+              ? 'Updating...'
+              : todo
+                ? 'Update'
+                : loading
+                  ? 'Creating...'
+                  : 'Create'}
           </Button>
         </div>
       </form>

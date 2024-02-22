@@ -18,7 +18,7 @@ import { useUser } from '@clerk/nextjs';
 import { CreatePost, UpdatePost } from '@/api/actions/BlogActions/BlogActions';
 import { BlogPostFormSchema } from '@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema';
 import { BlogPost } from '@prisma/client';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 type BlogFormProps = {
   post?: BlogPost;
@@ -31,6 +31,7 @@ export default function BlogForm({
   editMode,
   setEditMode,
 }: BlogFormProps) {
+  const [loading, setLoading] = useState(false);
   const user = useUser().user;
   const form = useForm<z.infer<typeof BlogPostFormSchema>>({
     resolver: zodResolver(BlogPostFormSchema),
@@ -50,6 +51,10 @@ export default function BlogForm({
 
   if (post) {
     onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
+      if (!loading) {
+        setLoading(true);
+      }
+
       try {
         await UpdatePost(post.id, data);
 
@@ -59,14 +64,22 @@ export default function BlogForm({
       } catch (error) {
         console.error(error);
       }
+
+      form.reset();
+      setLoading(false);
     };
   } else {
     onSubmit = async (data: z.infer<typeof BlogPostFormSchema>) => {
+      if (!loading) {
+        setLoading(true);
+      }
       try {
         await CreatePost(data);
       } catch (error) {
         console.error(error);
       }
+      form.reset();
+      setLoading(false);
     };
   }
 
@@ -117,7 +130,15 @@ export default function BlogForm({
         />
 
         <div className="self-center">
-          <Button type="submit">{post ? 'Update Post' : 'Create Post'}</Button>
+          <Button type="submit" disabled={loading}>
+            {post && loading
+              ? 'Updating...'
+              : post
+                ? 'Update'
+                : loading
+                  ? 'Creating...'
+                  : 'Create'}
+          </Button>
         </div>
       </form>
     </Form>

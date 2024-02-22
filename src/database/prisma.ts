@@ -153,9 +153,18 @@ export const deleteBlogPost = async (id: number) => {
 
 // Create a new to do
 export const createTodo = async (title: string, content: string) => {
+  const user = await currentUser();
+
+  if (!user) {
+    throw new Error('You must be logged in to create a to do');
+  }
+
+  const userId = user?.id;
+
   try {
     const newTodo = await prisma.todo.create({
       data: {
+        userId,
         title,
         content,
       },

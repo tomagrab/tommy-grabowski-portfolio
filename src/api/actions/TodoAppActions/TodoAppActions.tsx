@@ -42,8 +42,8 @@ export async function UpdateTodo(
     throw new Error('Failed to update todo');
   }
 
-  revalidatePath(`/TodoApp/${id}`);
-  redirect(`/TodoApp/${id}`);
+  revalidatePath(`/Projects`);
+  redirect(`/Projects`);
 }
 
 export async function DeleteTodo(id: number) {
