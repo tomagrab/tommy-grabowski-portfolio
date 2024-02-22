@@ -84,7 +84,7 @@ export default function TodoAppForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-4 rounded-lg"
+        className="flex w-full flex-col gap-4 rounded-lg bg-white p-4 shadow-md"
       >
         <FormField
           control={form.control}
