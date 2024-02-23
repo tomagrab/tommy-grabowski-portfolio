@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Dialog,
   DialogContent,
@@ -13,10 +14,10 @@ import {
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
 import { useUser } from '@clerk/nextjs';
 import { Todo } from '@prisma/client';
-import TodoDeleteButton from '../TodoDeleteButton/TodoDeleteButton';
-import { Badge } from '@/components/ui/badge';
-import TodoAppForm from '../TodoAppForm/TodoAppForm';
+import TodoDeleteButton from '@/components/TodoApp/TodoDeleteButton/TodoDeleteButton';
+import TodoAppForm from '@/components/TodoApp/TodoAppForm/TodoAppForm';
 import { useState } from 'react';
+import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
 
 type TodoAppDialogProps = {
   todo: Todo;
@@ -61,17 +62,26 @@ export default function TodoAppDialog({
             />
           )}
         </DialogDescription>
-        {isAuthorOrAdministrator(todo) ? (
-          <DialogFooter>
-            <Badge
-              className={`cursor-pointer ${!editMode ? 'bg-blue-500 hover:bg-blue-400' : 'bg-yellow-500 hover:bg-yellow-400'}`}
-              onClick={() => setEditMode(!editMode)}
-            >
-              {editMode ? 'Cancel' : 'Edit'}
-            </Badge>
-            <TodoDeleteButton todo={todo} />
-          </DialogFooter>
-        ) : null}
+        <DialogFooter>
+          <div
+            className={`w-full ${isAuthorOrAdministrator(todo) ? 'flex flex-col justify-between md:flex-row' : 'flex flex-col justify-start md:flex-row'}`}
+          >
+            <small>
+              {todo.author} | {FormatDate(todo.createdAt)}
+            </small>
+            {isAuthorOrAdministrator(todo) ? (
+              <div className="flex gap-2">
+                <Badge
+                  className={`cursor-pointer ${!editMode ? 'bg-blue-500 hover:bg-blue-400' : 'bg-yellow-500 hover:bg-yellow-400'}`}
+                  onClick={() => setEditMode(!editMode)}
+                >
+                  {editMode ? 'Cancel' : 'Edit'}
+                </Badge>
+                <TodoDeleteButton todo={todo} />
+              </div>
+            ) : null}
+          </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

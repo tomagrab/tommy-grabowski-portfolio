@@ -160,6 +160,8 @@ export const createTodo = async (title: string, content: string) => {
   }
 
   const userId = user?.id;
+  const userFullName = user?.firstName + ' ' + user?.lastName;
+  const userEmail = user?.emailAddresses[0].emailAddress;
 
   try {
     const newTodo = await prisma.todo.create({
@@ -167,6 +169,7 @@ export const createTodo = async (title: string, content: string) => {
         userId,
         title,
         content,
+        author: userFullName || userEmail,
       },
     });
 
