@@ -45,8 +45,8 @@ export default function RootLayout({
               <div className="layout__main--outer bg-slate-200 p-4">
                 <ScrollArea className="layout__main--inner w-full rounded bg-mint-cream p-4 shadow-xl">
                   {children}
-                  <Analytics />
                 </ScrollArea>
+                <Analytics />
               </div>
             </div>
           </div>
