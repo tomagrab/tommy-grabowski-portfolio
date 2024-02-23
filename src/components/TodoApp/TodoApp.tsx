@@ -23,10 +23,10 @@ async function TodoAppBody() {
   const user = await currentUser();
   const { has } = auth();
   const isAdministrator = has({
-    role: 'admin',
+    role: 'org:admin',
   });
   const isWriter = has({
-    role: 'writer',
+    role: 'org:writer',
   });
 
   const isUserOrWriterOrAdmin = user || isAdministrator || isWriter;
