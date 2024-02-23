@@ -1,14 +1,12 @@
 import '@/components/TodoApp/TodoAppList/TodoAppList.scss';
 import { getAllTodos } from '@/database/prisma';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import { Todo } from '@prisma/client';
 import TodoAppDialog from '../TodoAppDialog/TodoAppDialog';
 
 export default async function TodoAppList() {
-  const user = await currentUser();
   const { has } = auth();
   const isAdministrator = has({
-    role: 'admin',
+    role: 'org:admin',
   });
 
   const todos = await getAllTodos();
