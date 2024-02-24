@@ -8,6 +8,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { dark } from '@clerk/themes';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -47,6 +48,7 @@ export default function RootLayout({
                   {children}
                 </ScrollArea>
                 <Analytics />
+                <SpeedInsights />
               </div>
             </div>
           </div>
