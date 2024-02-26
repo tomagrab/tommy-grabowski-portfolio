@@ -101,7 +101,7 @@ const BlogPostHeader = ({
   }
 
   return (
-    <div className="blog_post--header flex items-center justify-between">
+    <div className="blog_post--header flex items-baseline justify-between">
       <div className="flex flex-col pb-4">
         <h2 className="blog_post--header__title">{post?.title}</h2>
         <small>
@@ -110,24 +110,26 @@ const BlogPostHeader = ({
         </small>
         <small>Last updated on {FormatDate(post.updatedAt)}</small>
       </div>
-      <div>
-        <FacebookShareButton post={post} />
-      </div>
-      {(user && isAdministrator) || (user && isPostAuthor) ? (
-        <div className="flex gap-2">
-          <Badge
-            className={`cursor-pointer ${
-              editMode
-                ? 'bg-yellow-500 hover:bg-yellow-400'
-                : 'bg-blue-500 hover:bg-blue-400'
-            }  `}
-            onClick={() => setEditMode(!editMode)}
-          >
-            {editMode ? 'Cancel' : 'Edit'}
-          </Badge>
-          <BlogDeleteButton post={post} />
+      <div className="flex items-center gap-2">
+        <div>
+          <FacebookShareButton post={post} />
         </div>
-      ) : null}
+        {(user && isAdministrator) || (user && isPostAuthor) ? (
+          <div className="flex gap-2">
+            <Badge
+              className={`cursor-pointer ${
+                editMode
+                  ? 'bg-yellow-500 hover:bg-yellow-400'
+                  : 'bg-blue-500 hover:bg-blue-400'
+              }  `}
+              onClick={() => setEditMode(!editMode)}
+            >
+              {editMode ? 'Cancel' : 'Edit'}
+            </Badge>
+            <BlogDeleteButton post={post} />
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };
