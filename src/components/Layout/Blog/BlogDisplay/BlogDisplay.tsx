@@ -9,6 +9,8 @@ import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPost } from '@prisma/client';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import BlogDeleteButton from '../BlogDeleteButton/BlogDeleteButton';
+import Link from 'next/link';
+import Image from 'next/image';
 
 type BlogDisplayProps = {
   user: UserResource | null | undefined;
@@ -82,7 +84,7 @@ const BlogPostHeader = ({
 
   if (!user || !isAdministratorOrPostAuthor) {
     return (
-      <div className="blog_post--header">
+      <div className="blog_post--header flex items-baseline justify-between">
         <div className="flex flex-col pb-4">
           <h2 className="blog_post--header__title">{post?.title}</h2>
           <small>
@@ -150,18 +152,26 @@ type FacebookShareButtonProps = {
 function FacebookShareButton({ post }: FacebookShareButtonProps) {
   return (
     <div
-      className="fb-share-button"
+      // Stlye the Facebook share button
+      className=""
       data-href="https://www.tommygrabowski.com/Blog/1"
       data-layout=""
       data-size=""
     >
-      <a
+      <Link
         target="_blank"
         href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.tommygrabowski.com%2FBlog%2F1&amp;src=sdkpreparse"
-        className="fb-xfbml-parse-ignore"
+        className="hover:bg-facebook-blue-light bg-facebook-blue flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white transition-all duration-300 ease-in-out"
       >
+        <Image
+          src="/Images/Facebook_Logo_Secondary.png"
+          alt="Facebook Logo"
+          className="inline-block"
+          width={16}
+          height={16}
+        />
         Share
-      </a>
+      </Link>
     </div>
   );
 }

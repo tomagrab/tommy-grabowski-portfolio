@@ -30,6 +30,8 @@ const config = {
         'react-blue-light': '#61DBFB',
         'ecpi-blue': '#104ba0',
         'ecpi-blue-light': '#1a62c9',
+        'facebook-blue': '#4267B2',
+        'facebook-blue-light': '#1877F2',
         'github-black': '#333333',
         'github-black-light': '#24292E',
         charcoal: '#465362',
