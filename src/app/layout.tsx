@@ -57,3 +57,18 @@ export default function RootLayout({
     </html>
   );
 }
+
+function FacebookSDK() {
+  return (
+    <>
+      <div id="fb-root"></div>
+      <script
+        async
+        defer
+        crossOrigin="anonymous"
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0&appId=1133437477680501"
+        nonce="pF9vaOfV"
+      ></script>
+    </>
+  );
+}

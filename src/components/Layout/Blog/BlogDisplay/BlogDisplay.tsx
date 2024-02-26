@@ -91,6 +91,9 @@ const BlogPostHeader = ({
           </small>
           <small>Last updated on {FormatDate(post.updatedAt)}</small>
         </div>
+        <div>
+          <FacebookShareButton post={post} />
+        </div>
       </div>
     );
   }
@@ -104,6 +107,9 @@ const BlogPostHeader = ({
           {FormatDate(post.createdAt)}
         </small>
         <small>Last updated on {FormatDate(post.updatedAt)}</small>
+      </div>
+      <div>
+        <FacebookShareButton post={post} />
       </div>
       {(user && isAdministrator) || (user && isPostAuthor) ? (
         <div className="flex gap-2">
@@ -136,3 +142,26 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
     </div>
   );
 };
+
+type FacebookShareButtonProps = {
+  post: BlogPost;
+};
+
+function FacebookShareButton({ post }: FacebookShareButtonProps) {
+  return (
+    <div
+      className="fb-share-button"
+      data-href="https://www.tommygrabowski.com/Blog/1"
+      data-layout=""
+      data-size=""
+    >
+      <a
+        target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.tommygrabowski.com%2FBlog%2F1&amp;src=sdkpreparse"
+        className="fb-xfbml-parse-ignore"
+      >
+        Share
+      </a>
+    </div>
+  );
+}
