@@ -1,6 +1,5 @@
 import { getBlogPost } from '@/database/prisma';
-import { Metadata, ResolvingMetadata } from 'next';
-import { Author } from 'next/dist/lib/metadata/types/metadata-types';
+import { Metadata } from 'next';
 
 type SingleBlogLayoutProps = {
   children: React.ReactNode;

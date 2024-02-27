@@ -121,7 +121,15 @@ const BlogHeader = ({
         <small>Last updated on {FormatDate(post.updatedAt)}</small>
       </div>
       <div className="flex items-center gap-2">
-        <div></div>
+        <div>
+          <FacebookShareButton
+            url={blogUrl}
+            quote={post.title}
+            hashtag="#tommygrabowski"
+          >
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+        </div>
         {(user && isAdministrator) || (user && isPostAuthor) ? (
           <div className="flex gap-2">
             <Badge
