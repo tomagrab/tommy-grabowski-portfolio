@@ -13,7 +13,11 @@ export default function ProjectsWeatherApp() {
     <Card>
       <CardHeader>
         <CardTitle>Weather Project</CardTitle>
-        <CardDescription>Simple weather app</CardDescription>
+        <CardDescription>
+          A simple weather app that displays current conditions and forecasts
+          based on your location (or defaults to Seattle). Enable location
+          access for the most accurate results.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <WeatherApp />

@@ -13,7 +13,11 @@ export default function ProjectsTodoApp() {
     <Card>
       <CardHeader>
         <CardTitle>To Do Project</CardTitle>
-        <CardDescription>Simple to do app</CardDescription>
+        <CardDescription>
+          A todo list app for authenticated users. Create, edit, and delete
+          todos to track tasks or even suggest website updates and new features.
+          Must be signed in to use.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <TodoApp />

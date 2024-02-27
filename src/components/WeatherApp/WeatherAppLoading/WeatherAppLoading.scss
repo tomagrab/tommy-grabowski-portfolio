@@ -1,0 +1,20 @@
+.loading-spinner {
+  --loading-size: 2rem;
+  @apply inline-flex; // To center the icon vertically and horizontally
+  // circle
+  width: var(--loading-size);
+  height: var(--loading-size);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: rotation 0.8s linear infinite;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,7 @@
+.weather-app-field {
+  @apply flex items-center justify-between gap-2 rounded bg-white p-4 shadow-md;
+}
+
+.weather-app-field__input {
+  @apply w-full;
+}
