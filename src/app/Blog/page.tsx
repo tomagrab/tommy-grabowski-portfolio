@@ -1,3 +1,4 @@
+
 import { getAllBlogPosts } from '@/database/prisma';
 import { currentUser } from '@clerk/nextjs';
 import Link from 'next/link';
