@@ -14,7 +14,7 @@ export default function TodoApp() {
 function TodoAppHeader() {
   return (
     <div>
-      <h2 className="pb-4 text-lg font-bold">TodoApp</h2>
+      <h2 className="pb-4 text-lg font-bold">To do App</h2>
     </div>
   );
 }

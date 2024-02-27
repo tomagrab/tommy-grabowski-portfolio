@@ -10,6 +10,9 @@ import WeatherAppLoading from '@/components/WeatherApp/WeatherAppLoading/Weather
 export default function WeatherAppForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [temperatureUnit, setTemperatureUnit] = useState<
+    'fahrenheit' | 'celsius'
+  >('fahrenheit');
   const [lat, setLat] = useState('');
   const [lon, setLon] = useState('');
   const [weatherData, setWeatherData] = useState<WeatherType | null>(null);
@@ -57,13 +60,19 @@ export default function WeatherAppForm() {
     <div>
       {/* Only show WeatherAppDisplay if there is Weather Data */}
       {weatherData && !loading ? (
-        <WeatherAppDisplay weatherData={weatherData} />
+        <WeatherAppDisplay
+          weatherData={weatherData}
+          temperatureUnit={temperatureUnit}
+        />
       ) : loading ? (
         <WeatherAppLoading />
       ) : !weatherData && error ? (
         <p>{error}</p>
       ) : null}
-      <form onSubmit={handleSubmit} className="flex flex-col items-center">
+      <form
+        onSubmit={handleSubmit}
+        className={`flex flex-col items-center ${weatherData && !loading ? 'pt-4' : ''}`}
+      >
         <div className="hidden">
           <label htmlFor="lat">Latitude:</label>
           <input
