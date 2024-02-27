@@ -7,10 +7,10 @@ import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/Con
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
 import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPost } from '@prisma/client';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, use, useEffect, useState } from 'react';
 import BlogDeleteButton from '../BlogDeleteButton/BlogDeleteButton';
-import Link from 'next/link';
-import Image from 'next/image';
+import { FacebookShareButton, FacebookIcon } from 'next-share';
+import { usePathname } from 'next/navigation';
 
 type BlogDisplayProps = {
   user: UserResource | null | undefined;
@@ -20,11 +20,12 @@ type BlogDisplayProps = {
   isEditMode?: boolean;
 };
 
-type BlogPostHeaderProps = {
+type BlogHeaderProps = {
   user: UserResource | null | undefined;
   isAdministrator: boolean;
   isPostAuthor: boolean;
   post: BlogPost;
+  blogUrl: string;
   editMode: boolean;
   setEditMode: Dispatch<SetStateAction<boolean>>;
 };
@@ -43,6 +44,7 @@ export default function BlogDisplay({
   const userId = user?.id;
   const postUserId = post?.userId;
   const isPostAuthor = userId === postUserId;
+  const blogUrl = window.location.origin + usePathname();
 
   useEffect(() => {
     if (!isAdministrator || !isPostAuthor) {
@@ -53,11 +55,12 @@ export default function BlogDisplay({
   return (
     <main>
       <article className="blog_post">
-        <BlogPostHeader
+        <BlogHeader
           user={user}
           isAdministrator={isAdministrator}
           isPostAuthor={isPostAuthor}
           post={post}
+          blogUrl={blogUrl}
           editMode={editMode}
           setEditMode={setEditMode}
         />
@@ -72,14 +75,15 @@ export default function BlogDisplay({
   );
 }
 
-const BlogPostHeader = ({
+const BlogHeader = ({
   user,
   isAdministrator,
   isPostAuthor,
   post,
+  blogUrl,
   editMode,
   setEditMode,
-}: BlogPostHeaderProps) => {
+}: BlogHeaderProps) => {
   const isAdministratorOrPostAuthor = isAdministrator || isPostAuthor;
 
   if (!user || !isAdministratorOrPostAuthor) {
@@ -94,7 +98,13 @@ const BlogPostHeader = ({
           <small>Last updated on {FormatDate(post.updatedAt)}</small>
         </div>
         <div>
-          <FacebookShareButton post={post} />
+          <FacebookShareButton
+            url={blogUrl}
+            quote={post.title}
+            hashtag="#tommygrabowski"
+          >
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
         </div>
       </div>
     );
@@ -111,9 +121,7 @@ const BlogPostHeader = ({
         <small>Last updated on {FormatDate(post.updatedAt)}</small>
       </div>
       <div className="flex items-center gap-2">
-        <div>
-          <FacebookShareButton post={post} />
-        </div>
+        <div></div>
         {(user && isAdministrator) || (user && isPostAuthor) ? (
           <div className="flex gap-2">
             <Badge
@@ -146,34 +154,3 @@ const BlogPostContent = ({ post }: BlogPostContentProps) => {
     </div>
   );
 };
-
-type FacebookShareButtonProps = {
-  post: BlogPost;
-};
-
-function FacebookShareButton({ post }: FacebookShareButtonProps) {
-  return (
-    <div
-      // Stlye the Facebook share button
-      className=""
-      data-href="https://www.tommygrabowski.com/Blog/1"
-      data-layout=""
-      data-size=""
-    >
-      <Link
-        target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.tommygrabowski.com%2FBlog%2F1&amp;src=sdkpreparse"
-        className="hover:bg-facebook-blue-light bg-facebook-blue flex items-center justify-center gap-2 rounded-md px-2 py-1 text-white transition-all duration-300 ease-in-out"
-      >
-        <Image
-          src="/Images/Facebook_Logo_Secondary.png"
-          alt="Facebook Logo"
-          className="inline-block"
-          width={16}
-          height={16}
-        />
-        Share
-      </Link>
-    </div>
-  );
-}
