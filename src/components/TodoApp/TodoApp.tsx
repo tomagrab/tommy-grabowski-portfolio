@@ -1,3 +1,4 @@
+import '@/components/TodoApp/TodoApp.scss';
 import TodoAppForm from '@/components/TodoApp/TodoAppForm/TodoAppForm';
 import TodoAppList from './TodoAppList/TodoAppList';
 import { auth, currentUser } from '@clerk/nextjs/server';
