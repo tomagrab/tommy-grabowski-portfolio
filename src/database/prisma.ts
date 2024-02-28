@@ -1,5 +1,7 @@
+import { BlogPostFormSchema } from '@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema';
 import { currentUser } from '@clerk/nextjs';
-import { PrismaClient } from '@prisma/client';
+import { Category, PrismaClient } from '@prisma/client';
+import { z } from 'zod';
 
 /*
  * Prisma Client is auto-generated based on your Prisma schema.
@@ -42,11 +44,7 @@ main()
 
 // Create a new blog post
 export const createBlogPost = async (
-  title: string,
-  content: string,
-  author: string,
-  categories: string[],
-  tags: string[],
+  values: z.infer<typeof BlogPostFormSchema>,
 ) => {
   const user = await currentUser();
 
@@ -60,14 +58,20 @@ export const createBlogPost = async (
     const newPost = await prisma.blogPost.create({
       data: {
         userId,
-        title,
-        content,
-        author,
+        title: values.title,
+        content: values.content,
+        author: values.author,
         categories: {
-          create: categories.map(category => ({ name: category })),
+          connectOrCreate: values.categories.map(category => ({
+            where: { name: category },
+            create: { name: category },
+          })),
         },
         tags: {
-          create: tags.map(tag => ({ name: tag })),
+          connectOrCreate: values.tags.map(tag => ({
+            where: { name: tag },
+            create: { name: tag },
+          })),
         },
       },
     });
@@ -83,20 +87,10 @@ export const getAllBlogPosts = async () => {
   try {
     const posts = await prisma.blogPost.findMany({
       orderBy: { createdAt: 'desc' },
-    });
-
-    return posts;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// Get recent blog posts
-export const getRecentBlogs = async (numberOfBlogs: number) => {
-  try {
-    const posts = await prisma.blogPost.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: numberOfBlogs,
+      include: {
+        categories: true,
+        tags: true,
+      },
     });
 
     return posts;
@@ -110,6 +104,10 @@ export const getBlogPost = async (id: number) => {
   try {
     const post = await prisma.blogPost.findUnique({
       where: { id },
+      include: {
+        categories: true,
+        tags: true,
+      },
     });
 
     if (!post) return null;
@@ -123,22 +121,63 @@ export const getBlogPost = async (id: number) => {
 // Update a blog post
 export const updateBlogPost = async (
   id: number,
-  title: string,
-  content: string,
+  data: z.infer<typeof BlogPostFormSchema>,
 ) => {
   try {
+    // First, fetch the current state of categories and tags for the post
+    const currentPost = await prisma.blogPost.findUnique({
+      where: { id },
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    if (!currentPost) {
+      throw new Error('Post not found');
+    }
+
+    // Map to just names for easier comparison
+    const currentCategories = currentPost.categories.map(c => c.name);
+    const currentTags = currentPost.tags.map(t => t.name);
+
+    // Determine which categories/tags to disconnect
+    const categoriesToDisconnect = currentCategories
+      .filter(c => !data.categories.includes(c))
+      .map(name => ({ name }));
+    const tagsToDisconnect = currentTags
+      .filter(t => !data.tags.includes(t))
+      .map(name => ({ name }));
+
+    // Now, update the post with connectOrCreate for new or existing categories/tags,
+    // and disconnect for those that are no longer associated
     const updatedPost = await prisma.blogPost.update({
       where: { id },
       data: {
-        title,
-        content,
+        title: data.title,
+        content: data.content,
         updatedAt: new Date(),
+        categories: {
+          connectOrCreate: data.categories.map(category => ({
+            where: { name: category },
+            create: { name: category },
+          })),
+          disconnect: categoriesToDisconnect,
+        },
+        tags: {
+          connectOrCreate: data.tags.map(tag => ({
+            where: { name: tag },
+            create: { name: tag },
+          })),
+          disconnect: tagsToDisconnect,
+        },
       },
     });
 
     return updatedPost;
   } catch (error) {
     console.error(error);
+    throw error; // It's often a good idea to re-throw the error after logging so that the calling function knows something went wrong.
   }
 };
 
@@ -150,6 +189,248 @@ export const deleteBlogPost = async (id: number) => {
     });
 
     return deletedPost;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*
+ * Misc. Blog Post operations
+ */
+
+// Get recent blog posts
+export const getRecentBlogs = async (numberOfBlogs: number) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: numberOfBlogs,
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get all blog posts with certain categories
+export const getBlogPostsWithCategories = async (categories: Category[]) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        categories: {
+          some: {
+            name: {
+              in: categories.map(c => c.name),
+            },
+          },
+        },
+      },
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get all blog posts with certain tags
+export const getBlogPostsWithTags = async (tags: string[]) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        tags: {
+          some: {
+            name: {
+              in: tags,
+            },
+          },
+        },
+      },
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get all blog posts with certain categories and tags
+export const getBlogPostsWithCategoriesAndTags = async (
+  categories: string[],
+  tags: string[],
+) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        categories: {
+          some: {
+            name: {
+              in: categories,
+            },
+          },
+        },
+        tags: {
+          some: {
+            name: {
+              in: tags,
+            },
+          },
+        },
+      },
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*
+ * Blog categories CRUD
+ */
+
+// Create a new category
+export const createCategory = async (name: string) => {
+  try {
+    const newCategory = await prisma.category.create({
+      data: {
+        name,
+      },
+    });
+
+    return newCategory;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get all categories
+export const getAllCategories = async () => {
+  try {
+    const categories = await prisma.category.findMany();
+
+    return categories;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get a single category
+export const getCategory = async (id: number) => {
+  try {
+    const category = await prisma.category.findUnique({
+      where: { id },
+    });
+
+    if (!category) return null;
+
+    return category;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Update a category
+export const updateCategory = async (id: number, name: string) => {
+  try {
+    const updatedCategory = await prisma.category.update({
+      where: { id },
+      data: {
+        name,
+      },
+    });
+
+    return updatedCategory;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Delete a category
+export const deleteCategory = async (id: number) => {
+  try {
+    const deletedCategory = await prisma.category.delete({
+      where: { id },
+    });
+
+    return deletedCategory;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*
+ * Blog tags CRUD
+ */
+
+// Create a new tag
+export const createTag = async (name: string) => {
+  try {
+    const newTag = await prisma.tag.create({
+      data: {
+        name,
+      },
+    });
+
+    return newTag;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get all tags
+export const getAllTags = async () => {
+  try {
+    const tags = await prisma.tag.findMany();
+
+    return tags;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get a single tag
+export const getTag = async (id: number) => {
+  try {
+    const tag = await prisma.tag.findUnique({
+      where: { id },
+    });
+
+    if (!tag) return null;
+
+    return tag;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Update a tag
+export const updateTag = async (id: number, name: string) => {
+  try {
+    const updatedTag = await prisma.tag.update({
+      where: { id },
+      data: {
+        name,
+      },
+    });
+
+    return updatedTag;
   } catch (error) {
     console.error(error);
   }

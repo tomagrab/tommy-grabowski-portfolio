@@ -12,13 +12,7 @@ import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 export async function CreatePost(values: z.infer<typeof BlogPostFormSchema>) {
-  const newPost = await createBlogPost(
-    values.title,
-    values.content,
-    values.author,
-    values.categories,
-    values.tags,
-  );
+  const newPost = await createBlogPost(values);
 
   if (!newPost) {
     throw new Error('Failed to create post');
@@ -48,7 +42,7 @@ export async function UpdatePost(
   id: number,
   values: z.infer<typeof BlogPostFormSchema>,
 ) {
-  const updatedPost = await updateBlogPost(id, values.title, values.content);
+  const updatedPost = await updateBlogPost(id, values);
 
   if (!updatedPost) {
     throw new Error('Failed to update post');

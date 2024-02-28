@@ -1,5 +1,4 @@
 import '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay.scss';
-import { BlogPost } from '@prisma/client';
 import {
   Accordion,
   AccordionContent,
@@ -10,11 +9,13 @@ import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
 import BlogActionButtons from '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons';
 import { User } from '@clerk/backend/dist/types/api/resources/User';
+import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
+import BlogCategoryAndTags from '../BlogDisplay/BlogCategoryAndTags/BlogCategoryAndTags';
 
 type BlogsDisplayProps = {
   user?: User | null;
   isAdministrator?: boolean;
-  posts?: BlogPost[];
+  posts?: BlogPostWithCategoriesAndTagsType[];
 };
 
 export default function BlogsDisplay({
@@ -65,6 +66,10 @@ export default function BlogsDisplay({
                   dangerouslySetInnerHTML={{
                     __html: contentPreview(post.content),
                   }}
+                />
+                <BlogCategoryAndTags
+                  categories={post.categories}
+                  tags={post.tags}
                 />
               </AccordionContent>
             </AccordionItem>

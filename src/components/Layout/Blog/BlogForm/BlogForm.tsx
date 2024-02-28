@@ -17,11 +17,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { useUser } from '@clerk/nextjs';
 import { CreatePost, UpdatePost } from '@/api/actions/BlogActions/BlogActions';
 import { BlogPostFormSchema } from '@/lib/Schemas/BlogPostFormSchema/BlogPostFormSchema';
-import { BlogPost } from '@prisma/client';
+import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 type BlogFormProps = {
-  post?: BlogPost;
+  post?: BlogPostWithCategoriesAndTagsType;
   editMode?: boolean;
   setEditMode?: Dispatch<SetStateAction<boolean>>;
 };
@@ -38,6 +38,8 @@ export default function BlogForm({
     defaultValues: {
       title: post?.title || '',
       content: post?.content || '',
+      categories: post?.categories.map(category => category.name) || [],
+      tags: post?.tags.map(tag => tag.name) || [],
       author:
         post?.author ||
         user?.fullName ||
@@ -117,6 +119,32 @@ export default function BlogForm({
         />
         <FormField
           control={form.control}
+          name="categories"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Categories</FormLabel>
+              <FormControl>
+                <Input placeholder="Categories" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tags</FormLabel>
+              <FormControl>
+                <Input placeholder="Tags" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="author"
           render={({ field }) => (
             <FormItem>
@@ -128,7 +156,6 @@ export default function BlogForm({
             </FormItem>
           )}
         />
-
         <div className="self-center">
           <Button type="submit" disabled={loading}>
             {post && loading

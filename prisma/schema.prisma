@@ -20,20 +20,20 @@ model BlogPost {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   comments  BlogPostComment[]
-  categories Category[]
-  tags      Tag[]
+  categories Category[] @relation("BlogPostToCategory")
+  tags      Tag[]     @relation("BlogPostToTag")
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String
-  posts     BlogPost[]
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  posts     BlogPost[]  @relation("BlogPostToCategory")
 }
 
 model Tag {
-  id        Int      @id @default(autoincrement())
-  name      String
-  posts     BlogPost[]
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  posts     BlogPost[]  @relation("BlogPostToTag")
 }
 
 model BlogPostComment {
