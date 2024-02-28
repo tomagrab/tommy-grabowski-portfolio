@@ -45,6 +45,8 @@ export const createBlogPost = async (
   title: string,
   content: string,
   author: string,
+  categories: string[],
+  tags: string[],
 ) => {
   const user = await currentUser();
 
@@ -61,6 +63,12 @@ export const createBlogPost = async (
         title,
         content,
         author,
+        categories: {
+          create: categories.map(category => ({ name: category })),
+        },
+        tags: {
+          create: tags.map(tag => ({ name: tag })),
+        },
       },
     });
 

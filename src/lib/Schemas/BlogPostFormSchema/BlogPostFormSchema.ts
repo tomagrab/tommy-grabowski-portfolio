@@ -17,5 +17,7 @@ export const BlogPostFormSchema = z.object({
     .max(10000, {
       message: 'Content must be at most 1000 characters long',
     }),
+  categories: z.array(z.string().min(3).max(100)),
+  tags: z.array(z.string().min(3).max(100)),
   author: z.string().min(3).max(100),
 });

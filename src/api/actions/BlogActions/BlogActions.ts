@@ -16,6 +16,8 @@ export async function CreatePost(values: z.infer<typeof BlogPostFormSchema>) {
     values.title,
     values.content,
     values.author,
+    values.categories,
+    values.tags,
   );
 
   if (!newPost) {
