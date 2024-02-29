@@ -9,7 +9,10 @@ export default authMiddleware({
     '/Projects',
     '/Login',
     '/Blog',
+    // This route is a dynamic route, so we need to use a regex to match it
     /^\/Blog\/([^\/]+)$/,
+    /^\/Blog\/Category\/([^\/]+)$/,
+    /^\/Blog\/Tag\/([^\/]+)$/,
   ],
   // Routes that can always be accessed, and have
   // no authentication information

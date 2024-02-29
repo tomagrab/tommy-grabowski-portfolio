@@ -57,14 +57,24 @@ const CategoryPostsHeader = async ({ category }: CategoryPostsHeaderProps) => {
   if (!user || !isWriterOrAdmin) {
     return (
       <div>
-        <h2 className="pb-4 text-lg font-bold">Blog - {category.name}</h2>
+        <h2 className="flex gap-2 pb-4 text-lg font-bold">
+          Blog
+          <Badge className="select-none bg-cyan-500 hover:bg-cyan-500">
+            {category.name}
+          </Badge>
+        </h2>
       </div>
     );
   }
 
   return (
     <div className="flex justify-between">
-      <h2 className="pb-4 text-lg font-bold">Blog - {category.name}</h2>
+      <h2 className="flex gap-2 pb-4 text-lg font-bold">
+        Blog
+        <Badge className="select-none bg-cyan-500 hover:bg-cyan-500">
+          {category.name}
+        </Badge>
+      </h2>
       <Link href="/Blog/NewBlog">
         <Badge>New Post</Badge>
       </Link>

@@ -222,6 +222,7 @@ export const getRecentBlogs = async (numberOfBlogs: number) => {
 export const getBlogPostsByCategory = async (categoryId: number) => {
   try {
     const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
       where: {
         categories: {
           some: {
@@ -245,6 +246,7 @@ export const getBlogPostsByCategory = async (categoryId: number) => {
 export const getBlogPostsWithCategories = async (categories: Category[]) => {
   try {
     const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
       where: {
         categories: {
           some: {
@@ -270,6 +272,7 @@ export const getBlogPostsWithCategories = async (categories: Category[]) => {
 export const getBlogPostsByTag = async (tagId: number) => {
   try {
     const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
       where: {
         tags: {
           some: {
@@ -293,6 +296,7 @@ export const getBlogPostsByTag = async (tagId: number) => {
 export const getBlogPostsWithTags = async (tags: string[]) => {
   try {
     const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
       where: {
         tags: {
           some: {
@@ -321,6 +325,7 @@ export const getBlogPostsWithCategoriesAndTags = async (
 ) => {
   try {
     const posts = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
       where: {
         categories: {
           some: {
