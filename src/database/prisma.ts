@@ -62,13 +62,15 @@ export const createBlogPost = async (
         content: values.content,
         author: values.author,
         categories: {
-          connectOrCreate: values.categories.map(category => ({
-            where: { name: category },
-            create: { name: category },
-          })),
+          connectOrCreate: (values.categories as string[]).map(
+            (category: string) => ({
+              where: { name: category },
+              create: { name: category },
+            }),
+          ),
         },
         tags: {
-          connectOrCreate: values.tags.map(tag => ({
+          connectOrCreate: (values.tags as string[]).map((tag: string) => ({
             where: { name: tag },
             create: { name: tag },
           })),
@@ -158,14 +160,14 @@ export const updateBlogPost = async (
         content: data.content,
         updatedAt: new Date(),
         categories: {
-          connectOrCreate: data.categories.map(category => ({
+          connectOrCreate: (data.categories as string[]).map(category => ({
             where: { name: category },
             create: { name: category },
           })),
           disconnect: categoriesToDisconnect,
         },
         tags: {
-          connectOrCreate: data.tags.map(tag => ({
+          connectOrCreate: (data.tags as string[]).map(tag => ({
             where: { name: tag },
             create: { name: tag },
           })),

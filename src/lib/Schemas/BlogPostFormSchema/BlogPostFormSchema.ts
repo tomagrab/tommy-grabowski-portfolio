@@ -17,16 +17,14 @@ export const BlogPostFormSchema = z.object({
     .max(10000, {
       message: 'Content must be at most 1000 characters long',
     }),
-  categories: z
-    .string()
-    .min(3, { message: 'Categories must be at least 3 characters long' })
-    .max(100, { message: 'Categories must be at most 100 characters long' })
-    .transform(value => value.split(',').map(item => item.trim())),
-  tags: z
-    .string()
-    .min(3, { message: 'Tags must be at least 3 characters long' })
-    .max(100, { message: 'Tags must be at most 100 characters long' })
-    .transform(value => value.split(',').map(item => item.trim())),
+  categories: z.union([
+    z.string().transform(val => val.split(',').map(item => item.trim())),
+    z.string(),
+  ]),
+  tags: z.union([
+    z.string().transform(val => val.split(',').map(item => item.trim())),
+    z.string(),
+  ]),
 
   author: z.string().min(3).max(100),
 });

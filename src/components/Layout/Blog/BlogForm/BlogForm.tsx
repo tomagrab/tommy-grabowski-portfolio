@@ -38,8 +38,9 @@ export default function BlogForm({
     defaultValues: {
       title: post?.title || '',
       content: post?.content || '',
-      categories: post?.categories.map(category => category.name) || [],
-      tags: post?.tags.map(tag => tag.name) || [],
+      categories:
+        post?.categories.map(category => category.name).join(', ') || '',
+      tags: post?.tags.map(tag => tag.name).join(', ') || '',
       author:
         post?.author ||
         user?.fullName ||
