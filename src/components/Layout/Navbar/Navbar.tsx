@@ -22,7 +22,10 @@ export default function Navbar() {
             <UserButton />
           </SignedIn>
           <SignedOut>
-            <NavigationIcon iconName="login" href="/LogIn" />
+            <NavigationIcon
+              iconName="login"
+              href="https://accounts.tommygrabowski.com/sign-in"
+            />
           </SignedOut>
         </div>
         <NavigationIcon iconName="about" href="/About" />

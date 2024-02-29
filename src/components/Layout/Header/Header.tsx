@@ -37,7 +37,11 @@ export default function Header() {
         </SignedIn>
         <SignedOut>
           <div className="hidden md:flex">
-            <NavigationIcon iconName="login" href="/LogIn" headerIcon={true} />
+            <NavigationIcon
+              iconName="login"
+              href="https://accounts.tommygrabowski.com/sign-in"
+              headerIcon={true}
+            />
           </div>
         </SignedOut>
       </div>
