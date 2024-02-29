@@ -5,6 +5,7 @@ import { currentUser } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server';
 import { Tag } from '@prisma/client';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 type TagPostsProps = {
   params: {
