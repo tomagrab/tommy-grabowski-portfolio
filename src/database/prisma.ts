@@ -354,6 +354,24 @@ export const getBlogPostsWithCategoriesAndTags = async (
   }
 };
 
+// Increase blog post views
+export const increaseBlogPostViews = async (id: number) => {
+  try {
+    const updatedPost = await prisma.blogPost.update({
+      where: { id },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+
+    return updatedPost;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 /*
  * Blog categories CRUD
  */

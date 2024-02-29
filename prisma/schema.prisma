@@ -19,6 +19,7 @@ model BlogPost {
   author    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  views     Int     @default(0)
   comments  BlogPostComment[]
   categories Category[] @relation("BlogPostToCategory")
   tags      Tag[]     @relation("BlogPostToTag")
