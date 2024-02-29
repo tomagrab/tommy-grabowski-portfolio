@@ -94,43 +94,42 @@ export default function BlogHeader({
           <small>Last updated on {FormatDate(post.updatedAt)}</small>
         </div>
         {(user && isAdministrator) || (user && isPostAuthor) ? (
-            <div className="flex gap-2">
-              <Badge
-                className={`cursor-pointer ${
-                  editMode
-                    ? 'bg-yellow-500 hover:bg-yellow-400'
-                    : 'bg-blue-500 hover:bg-blue-400'
-                }  `}
-                onClick={() => setEditMode(!editMode)}
-              >
-                {editMode ? 'Cancel' : 'Edit'}
-              </Badge>
-              <BlogDeleteButton post={post} />
-            </div>
-          ) : null}
-        <div className="flex flex-col items-center gap-2">
-            <div>
-              <EyeIcon size={32} />
-              <p className="text-center text-sm font-bold">{post.views}</p>
-            </div>
-            <FacebookShareButton
-              url={blogUrl}
-              quote={post.title}
-              hashtag={`#${post.tags.map(tag => tag.name).join(' ')}`}
+          <div className="flex gap-2">
+            <Badge
+              className={`cursor-pointer ${
+                editMode
+                  ? 'bg-yellow-500 hover:bg-yellow-400'
+                  : 'bg-blue-500 hover:bg-blue-400'
+              }  `}
+              onClick={() => setEditMode(!editMode)}
             >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-            <TwitterShareButton
-              url={blogUrl}
-              title={post.title}
-              hashtags={post.tags.map(tag => tag.name)}
-            >
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
-            <RedditShareButton url={blogUrl} title={post.title}>
-              <RedditIcon size={32} round />
-            </RedditShareButton>
+              {editMode ? 'Cancel' : 'Edit'}
+            </Badge>
+            <BlogDeleteButton post={post} />
           </div>
+        ) : null}
+        <div className="flex flex-col items-center gap-2">
+          <div>
+            <EyeIcon size={32} />
+            <p className="text-center text-sm font-bold">{post.views}</p>
+          </div>
+          <FacebookShareButton
+            url={blogUrl}
+            quote={post.title}
+            hashtag={`#${post.tags.map(tag => tag.name).join(' ')}`}
+          >
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <TwitterShareButton
+            url={blogUrl}
+            title={post.title}
+            hashtags={post.tags.map(tag => tag.name)}
+          >
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+          <RedditShareButton url={blogUrl} title={post.title}>
+            <RedditIcon size={32} round />
+          </RedditShareButton>
         </div>
       </div>
     </div>
