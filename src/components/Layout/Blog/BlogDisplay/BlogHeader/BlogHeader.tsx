@@ -39,9 +39,9 @@ export default function BlogHeader({
 
   if (!user || !isAdministratorOrPostAuthor) {
     return (
-      <div className="">
+      <div>
         <div className="blog_post--header flex items-start justify-between gap-4">
-          <div className="flex flex-col justify-start ">
+          <div className="flex flex-col justify-start">
             <h2 className="text-4xl font-bold">{post?.title}</h2>
             <small>
               Written by <strong>{post.author}</strong> on{' '}
@@ -55,7 +55,7 @@ export default function BlogHeader({
           </div>
 
           <div className="flex flex-col items-center gap-2">
-            <div className="">
+            <div>
               <EyeIcon size={32} />
               <p className="text-center text-sm font-bold">{post.views}</p>
             </div>
@@ -84,33 +84,16 @@ export default function BlogHeader({
 
   return (
     <div>
-      <div className="blog_post--header flex items-baseline justify-between">
-        <div className="flex flex-col ">
-          <h2 className="blog_post--header__title">{post?.title}</h2>
+      <div className="blog_post--header flex items-start justify-between gap-4">
+        <div className="flex flex-col justify-start">
+          <h2 className="text-4xl font-bold">{post?.title}</h2>
           <small>
             Written by <strong>{post.author}</strong> on{' '}
             {FormatDate(post.createdAt)}
           </small>
           <small>Last updated on {FormatDate(post.updatedAt)}</small>
         </div>
-        <div className="flex items-center gap-2">
-          <div>
-            <FacebookShareButton
-              url={blogUrl}
-              quote={post.title}
-              //
-              hashtag={`#${post.tags.map(tag => tag.name).join(' ')}`}
-            >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-            <EyeIcon size={32} />
-
-            <BlogCategoryAndTags
-              categories={post.categories}
-              tags={post.tags}
-            />
-          </div>
-          {(user && isAdministrator) || (user && isPostAuthor) ? (
+        {(user && isAdministrator) || (user && isPostAuthor) ? (
             <div className="flex gap-2">
               <Badge
                 className={`cursor-pointer ${
@@ -125,6 +108,29 @@ export default function BlogHeader({
               <BlogDeleteButton post={post} />
             </div>
           ) : null}
+        <div className="flex flex-col items-center gap-2">
+            <div>
+              <EyeIcon size={32} />
+              <p className="text-center text-sm font-bold">{post.views}</p>
+            </div>
+            <FacebookShareButton
+              url={blogUrl}
+              quote={post.title}
+              hashtag={`#${post.tags.map(tag => tag.name).join(' ')}`}
+            >
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+            <TwitterShareButton
+              url={blogUrl}
+              title={post.title}
+              hashtags={post.tags.map(tag => tag.name)}
+            >
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <RedditShareButton url={blogUrl} title={post.title}>
+              <RedditIcon size={32} round />
+            </RedditShareButton>
+          </div>
         </div>
       </div>
     </div>
