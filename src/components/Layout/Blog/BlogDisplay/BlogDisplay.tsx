@@ -28,12 +28,13 @@ export default function BlogDisplay({
   const postUserId = post?.userId;
   const isPostAuthor = userId === postUserId;
   const blogUrl = window.location.origin + usePathname();
+  const isAdministratorOrPostAuthor = isAdministrator || isPostAuthor;
 
   useEffect(() => {
-    if (!isAdministrator || !isPostAuthor) {
+    if (!isAdministratorOrPostAuthor) {
       setEditMode(false);
     }
-  }, [isAdministrator, isPostAuthor, userId, postUserId]);
+  }, [isAdministratorOrPostAuthor, userId, postUserId]);
 
   return (
     <main>
