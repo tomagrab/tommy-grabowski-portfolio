@@ -73,12 +73,6 @@
   body {
     @apply bg-background text-foreground;
   }
-  main {
-    // @apply p-4;
-  }
-  pre {
-    @apply whitespace-pre-wrap rounded-lg bg-charcoal p-4 text-white;
-  }
 }
 
 .markdown {
@@ -94,23 +88,23 @@
   }
 
   & > h2 {
-    @apply pb-4 text-2xl font-bold;
+    @apply my-4 text-2xl font-bold;
   }
 
   & > h3 {
-    @apply pb-4 text-xl font-bold;
+    @apply my-4 text-xl font-bold;
   }
 
   & > h4 {
-    @apply pb-4 text-lg font-bold;
+    @apply my-4 text-lg font-bold;
   }
 
   & > h5 {
-    @apply pb-4 text-base font-bold;
+    @apply my-4 text-base font-bold;
   }
 
   & > h6 {
-    @apply pb-4 text-sm font-bold;
+    @apply my-4 text-sm font-bold;
   }
 
   & > ul {
@@ -137,11 +131,16 @@
     }
   }
 
+  & > code,
+  & > p > code {
+    @apply rounded bg-charcoal p-1 text-white;
+  }
+
   & > blockquote {
     @apply my-4 border-l-4 border-primary-foreground bg-primary-foreground bg-opacity-10 p-4;
   }
 
   & > pre {
-    @apply my-4;
+    @apply my-4 whitespace-pre-wrap rounded-lg bg-charcoal p-4 text-white;
   }
 }
