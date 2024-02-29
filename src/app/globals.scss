@@ -94,23 +94,23 @@
   }
 
   & > h2 {
-    @apply text-2xl font-bold;
+    @apply pb-4 text-2xl font-bold;
   }
 
   & > h3 {
-    @apply text-xl font-bold;
+    @apply pb-4 text-xl font-bold;
   }
 
   & > h4 {
-    @apply text-lg font-bold;
+    @apply pb-4 text-lg font-bold;
   }
 
   & > h5 {
-    @apply text-base font-bold;
+    @apply pb-4 text-base font-bold;
   }
 
   & > h6 {
-    @apply text-sm font-bold;
+    @apply pb-4 text-sm font-bold;
   }
 
   & > ul {

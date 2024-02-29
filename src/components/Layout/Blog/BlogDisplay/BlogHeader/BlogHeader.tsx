@@ -45,7 +45,7 @@ export default function BlogHeader({
             <FacebookShareButton
               url={blogUrl}
               quote={post.title}
-              hashtag="#tommygrabowski"
+              hashtag={post.tags.map(tag => tag.name).join(' ')}
             >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
