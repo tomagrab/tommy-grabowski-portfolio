@@ -45,7 +45,7 @@ export default function BlogHeader({
             <FacebookShareButton
               url={blogUrl}
               quote={post.title}
-              hashtag={post.tags.map(tag => tag.name).join(' ')}
+              hashtag={`#${post.tags.map(tag => tag.name).join(' ')}`}
             >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
@@ -72,7 +72,7 @@ export default function BlogHeader({
             <FacebookShareButton
               url={blogUrl}
               quote={post.title}
-              hashtag={post.tags.map(tag => tag.name).join(' ')}
+              hashtag={`#${post.tags.map(tag => tag.name).join(' ')}`}
             >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
