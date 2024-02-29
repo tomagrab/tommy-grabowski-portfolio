@@ -1,6 +1,7 @@
-import '@/components/Layout/Blog/BlogDisplay/BlogCategoryAndTags/BlogCategoryAndTags.scss';
+import '@/components/Layout/Blog/BlogCategoryAndTags/BlogCategoryAndTags.scss';
 import { Badge } from '@/components/ui/badge';
 import { Category, Tag } from '@prisma/client';
+import Link from 'next/link';
 
 type BlogCategoryAndTagsProps = {
   categories: Category[];
@@ -16,17 +17,19 @@ export default function BlogCategoryAndTags({
       {/* Show Categories */}
       <div className="flex flex-wrap gap-2">
         {categories.map(category => (
-          <Badge className="bg-cyan-500" key={category.id}>
-            {category.name}
-          </Badge>
+          <Link href={`/Blog/Category/${category.id}`} key={category.id}>
+            <Badge className="bg-cyan-500 hover:bg-cyan-400">
+              {category.name}
+            </Badge>
+          </Link>
         ))}
       </div>
       {/* Show Tags */}
       <div className="flex flex-wrap gap-2">
         {tags.map(tag => (
-          <Badge className="bg-pink-500" key={tag.id}>
-            #{tag.name}
-          </Badge>
+          <Link href={`/Blog/Tag/${tag.id}`} key={tag.id}>
+            <Badge className="bg-pink-500 hover:bg-pink-400">#{tag.name}</Badge>
+          </Link>
         ))}
       </div>
     </div>

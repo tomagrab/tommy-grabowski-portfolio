@@ -4,10 +4,10 @@ import '@/components/Layout/Blog/BlogDisplay/BlogDisplay.scss';
 import BlogForm from '@/components/Layout/Blog/BlogForm/BlogForm';
 import BlogHeader from '@/components/Layout/Blog/BlogDisplay/BlogHeader/BlogHeader';
 import BlogContent from '@/components/Layout/Blog/BlogDisplay/BlogContent/BlogContent';
+import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import type { UserResource } from '@clerk/types/dist/user';
-import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 
 type BlogDisplayProps = {
   user: UserResource | null | undefined;

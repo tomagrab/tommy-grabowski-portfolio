@@ -1,6 +1,6 @@
 import '@/components/Layout/Blog/BlogDisplay/BlogHeader/BlogHeader.scss';
 import BlogDeleteButton from '@/components/Layout/Blog/BlogDeleteButton/BlogDeleteButton';
-import BlogCategoryAndTags from '@/components/Layout/Blog/BlogDisplay/BlogCategoryAndTags/BlogCategoryAndTags';
+import BlogCategoryAndTags from '@/components/Layout/Blog/BlogCategoryAndTags/BlogCategoryAndTags';
 import { Badge } from '@/components/ui/badge';
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
 import { FacebookShareButton, FacebookIcon } from 'next-share';

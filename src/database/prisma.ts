@@ -218,6 +218,29 @@ export const getRecentBlogs = async (numberOfBlogs: number) => {
   }
 };
 
+// Get blog posts by one of its categories
+export const getBlogPostsByCategory = async (categoryId: number) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        categories: {
+          some: {
+            id: categoryId,
+          },
+        },
+      },
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // Get all blog posts with certain categories
 export const getBlogPostsWithCategories = async (categories: Category[]) => {
   try {
@@ -228,6 +251,29 @@ export const getBlogPostsWithCategories = async (categories: Category[]) => {
             name: {
               in: categories.map(c => c.name),
             },
+          },
+        },
+      },
+      include: {
+        categories: true,
+        tags: true,
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get blog posts by one of its tags
+export const getBlogPostsByTag = async (tagId: number) => {
+  try {
+    const posts = await prisma.blogPost.findMany({
+      where: {
+        tags: {
+          some: {
+            id: tagId,
           },
         },
       },

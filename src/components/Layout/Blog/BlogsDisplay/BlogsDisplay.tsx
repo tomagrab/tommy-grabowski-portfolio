@@ -10,7 +10,7 @@ import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/Con
 import BlogActionButtons from '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons';
 import { User } from '@clerk/backend/dist/types/api/resources/User';
 import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
-import BlogCategoryAndTags from '../BlogDisplay/BlogCategoryAndTags/BlogCategoryAndTags';
+import BlogCategoryAndTags from '../BlogCategoryAndTags/BlogCategoryAndTags';
 
 type BlogsDisplayProps = {
   user?: User | null;
@@ -53,6 +53,10 @@ export default function BlogsDisplay({
                       {FormatDate(post.createdAt)}
                     </small>
                   </div>
+                  <BlogCategoryAndTags
+                    categories={post.categories}
+                    tags={post.tags}
+                  />
                   <BlogActionButtons
                     user={JSON.parse(JSON.stringify(user))}
                     isAdministrator={isAdministrator}
@@ -66,10 +70,6 @@ export default function BlogsDisplay({
                   dangerouslySetInnerHTML={{
                     __html: contentPreview(post.content),
                   }}
-                />
-                <BlogCategoryAndTags
-                  categories={post.categories}
-                  tags={post.tags}
                 />
               </AccordionContent>
             </AccordionItem>
