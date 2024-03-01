@@ -33,10 +33,10 @@ export default function BlogsDisplay({
   >([]);
   const contentPreview = (content: string) => {
     const convertedHTML = ConvertMarkdownToHTML(content);
-    const match = convertedHTML.match(/<[^>]*>(.{0,200})<[^>]*>/);
+    const matches = convertedHTML.match(/<[^>]*>(.{0,1})<[^>]*>/g);
 
-    if (match) {
-      return match[0] + '...';
+    if (matches) {
+      return matches.join(' ') + '...';
     } else {
       return convertedHTML.slice(0, 200) + '...';
     }
