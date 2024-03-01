@@ -1,3 +1,5 @@
+'use client';
+
 import '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay.scss';
 import {
   Accordion,
@@ -11,6 +13,8 @@ import BlogActionButtons from '@/components/Layout/Blog/BlogActionButtons/BlogAc
 import { User } from '@clerk/backend/dist/types/api/resources/User';
 import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 import BlogCategoryAndTags from '../BlogCategoryAndTags/BlogCategoryAndTags';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
 type BlogsDisplayProps = {
   user?: User | null;
@@ -23,6 +27,10 @@ export default function BlogsDisplay({
   isAdministrator,
   posts,
 }: BlogsDisplayProps) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState<
+    BlogPostWithCategoriesAndTagsType[]
+  >([]);
   const contentPreview = (content: string) => {
     const convertedHTML = ConvertMarkdownToHTML(content);
     const match = convertedHTML.match(/<[^>]*>(.{0,200})<[^>]*>/);
@@ -34,11 +42,41 @@ export default function BlogsDisplay({
     }
   };
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    const filtered = posts?.filter(post => {
+      return (
+        post.title.toLowerCase().includes(query) ||
+        post.content.toLowerCase().includes(query) ||
+        post.categories.some(category =>
+          category.name.toLowerCase().includes(query),
+        ) ||
+        post.tags.some(tag => tag.name.toLowerCase().includes(query)) ||
+        post.author.toLowerCase().includes(query) ||
+        FormatDate(post.createdAt).toLowerCase().includes(query) ||
+        FormatDate(post.updatedAt).toLowerCase().includes(query)
+      );
+    });
+
+    setFilteredPosts(filtered ?? []);
+  };
+
+  const displayPosts = searchQuery ? filteredPosts : posts;
+
   return (
     <>
-      {posts && posts.length > 0 ? (
+      <input
+        type="text"
+        className="mb-4 w-full rounded-lg border-2 border-gray-300 p-2 outline-none transition-all duration-200 ease-in-out focus:border-gray-500"
+        placeholder="Search for a post"
+        onInput={handleSearch}
+      />
+
+      {displayPosts && displayPosts.length > 0 ? (
         <Accordion type="multiple" className="flex flex-col gap-4 ">
-          {posts.map((post, index) => (
+          {displayPosts.map((post, index) => (
             <AccordionItem
               className="blogs_post rounded-lg border bg-white p-4"
               key={post.id}
