@@ -133,7 +133,7 @@
 
   & > code,
   & > p > code {
-    @apply rounded bg-charcoal p-1 text-white;
+    @apply my-2 rounded bg-slate-950 px-2 py-1 text-white;
   }
 
   & > blockquote {
