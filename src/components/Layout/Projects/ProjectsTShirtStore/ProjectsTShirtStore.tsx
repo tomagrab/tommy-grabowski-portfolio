@@ -14,9 +14,9 @@ export default function ProjectsTShirtStore() {
       <CardHeader>
         <CardTitle>Tommy&apos;s Scams</CardTitle>
         <CardDescription>
-          A todo list app for authenticated users. Create, edit, and delete
-          todos to track tasks or even suggest website updates and new features.
-          Must be signed in to use.
+          Own a piece of internet infamy! Get your official &quot;Tommy
+          Grabowski Scammed Me&quot; merch. These shirts are so exclusive, you
+          might even get scammed trying to buy one. Get yours today!
         </CardDescription>
       </CardHeader>
       <CardContent className="">
