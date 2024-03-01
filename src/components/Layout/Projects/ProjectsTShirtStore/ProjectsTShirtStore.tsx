@@ -23,7 +23,7 @@ export default function ProjectsTShirtStore() {
         <iframe
           className="mx-auto h-[430px] w-full rounded-2xl border-2 border-gray-200 shadow-lg md:h-[740px]"
           src="https://embed.creator-spring.com/widget?slug=my-store-f573da&per=5&bg=ffffff&txtcolor=000000&currency=&page=1"
-          title="My widget Merch store powered by Spring"
+          title="Tommy's Scams Store"
           data-reactroot=""
         ></iframe>
       </CardContent>
