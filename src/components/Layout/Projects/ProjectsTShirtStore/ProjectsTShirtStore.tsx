@@ -22,8 +22,8 @@ export default function ProjectsTShirtStore() {
       <CardContent className="">
         <iframe
           className="mx-auto h-[430px] w-full rounded-2xl border-2 border-gray-200 shadow-lg md:h-[740px]"
-          src="https://embed.creator-spring.com/widget?slug=my-store-f573da&per=5&bg=ffffff&txtcolor=000000&currency=&page=1"
-          title="Tommy's Scams Store"
+          src="https://embed.creator-spring.com/widget?slug=my-store-f573da&per=6&bg=ffffff&txtcolor=000000&currency=&page=1"
+          title="Tommy Grabowski Scammed Me Widget Merch store powered by Spring"
           data-reactroot=""
         ></iframe>
       </CardContent>
