@@ -9,7 +9,7 @@ export default function HomeAbout() {
   return (
     <section>
       <Card className="flex flex-col items-center py-4">
-        <CardHeader>
+        <CardHeader className="flex flex-col items-center py-4">
           <Image
             className="rounded-lg"
             alt="Tommy Grabowski"

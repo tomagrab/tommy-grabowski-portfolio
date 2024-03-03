@@ -18,11 +18,7 @@ export default async function Blog() {
   return (
     <main>
       <BlogHeader />
-      <BlogsDisplay
-        user={user}
-        isAdministrator={isAdministrator}
-        posts={posts}
-      />
+      <BlogsDisplay posts={posts} />
     </main>
   );
 }

@@ -1,5 +1,3 @@
-'use client';
-
 import '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay.scss';
 import {
   Accordion,
@@ -10,14 +8,12 @@ import {
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
 import BlogActionButtons from '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons';
-import { User } from '@clerk/backend/dist/types/api/resources/User';
+import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 import BlogCategoryAndTags from '../BlogCategoryAndTags/BlogCategoryAndTags';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
 
 type BlogsDisplayProps = {
-  user?: User | null;
+  user?: UserResource | null;
   isAdministrator?: boolean;
   posts?: BlogPostWithCategoriesAndTagsType[];
 };
@@ -27,56 +23,22 @@ export default function BlogsDisplay({
   isAdministrator,
   posts,
 }: BlogsDisplayProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredPosts, setFilteredPosts] = useState<
-    BlogPostWithCategoriesAndTagsType[]
-  >([]);
   const contentPreview = (content: string) => {
     const convertedHTML = ConvertMarkdownToHTML(content);
-    const matches = convertedHTML.match(/<[^>]*>(.{0,1})<[^>]*>/g);
+    const matches = convertedHTML.match(/<[^>]*>(.{0,20})<[^>]*>/g);
 
     if (matches) {
       return matches.join(' ') + '...';
     } else {
-      return convertedHTML.slice(0, 200) + '...';
+      return convertedHTML.slice(0, 20) + '...';
     }
   };
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
-
-    const filtered = posts?.filter(post => {
-      return (
-        post.title.toLowerCase().includes(query) ||
-        post.content.toLowerCase().includes(query) ||
-        post.categories.some(category =>
-          category.name.toLowerCase().includes(query),
-        ) ||
-        post.tags.some(tag => tag.name.toLowerCase().includes(query)) ||
-        post.author.toLowerCase().includes(query) ||
-        FormatDate(post.createdAt).toLowerCase().includes(query) ||
-        FormatDate(post.updatedAt).toLowerCase().includes(query)
-      );
-    });
-
-    setFilteredPosts(filtered ?? []);
-  };
-
-  const displayPosts = searchQuery ? filteredPosts : posts;
-
   return (
     <>
-      <input
-        type="text"
-        className="mb-4 w-full rounded-lg border-2 border-gray-300 p-2 outline-none transition-all duration-200 ease-in-out focus:border-gray-500"
-        placeholder="Search for a post"
-        onInput={handleSearch}
-      />
-
-      {displayPosts && displayPosts.length > 0 ? (
+      {posts && posts.length > 0 ? (
         <Accordion type="multiple" className="flex flex-col gap-4 ">
-          {displayPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <AccordionItem
               className="blogs_post rounded-lg border bg-white p-4"
               key={post.id}
@@ -95,11 +57,13 @@ export default function BlogsDisplay({
                     categories={post.categories}
                     tags={post.tags}
                   />
-                  <BlogActionButtons
-                    user={JSON.parse(JSON.stringify(user))}
-                    isAdministrator={isAdministrator}
-                    post={post}
-                  />
+                  {user && isAdministrator ? (
+                    <BlogActionButtons
+                      user={user}
+                      isAdministrator={isAdministrator}
+                      post={post}
+                    />
+                  ) : null}
                 </div>
               </AccordionTrigger>
               <AccordionContent className="blogs_post--content flex flex-col gap-4">
