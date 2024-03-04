@@ -8,8 +8,8 @@ import type { UserResource } from '@clerk/types/dist/user';
 import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 
 type BlogActionButtonsProps = {
-  user?: UserResource;
-  isAdministrator?: boolean;
+  user: UserResource | null | undefined;
+  isAdministrator: boolean;
   post: BlogPostWithCategoriesAndTagsType;
 };
 
@@ -22,9 +22,6 @@ export default function BlogActionButtons({
   const isAdministratorOrAuthor = isAdministrator || isPostAuthor;
   return (
     <div className={`${user && isAdministratorOrAuthor ? 'flex gap-2' : ''}`}>
-      <Link href={`/Blog/${post.id}`}>
-        <Badge className="bg-green-500 hover:bg-green-400">View</Badge>
-      </Link>
       {user && isAdministratorOrAuthor ? (
         <>
           <Link href={`/Blog/${post.id}?editMode=true`}>

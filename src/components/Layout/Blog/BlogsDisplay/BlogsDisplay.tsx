@@ -1,6 +1,7 @@
 'use client';
 
 import BlogCategoryAndTags from '@/components/Layout/Blog/BlogCategoryAndTags/BlogCategoryAndTags';
+import BlogActionButtons from '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -24,12 +25,18 @@ import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/Con
 import { ExtractFirstTwoHtmlTags } from '@/lib/Utilities/ExtractFirstTwoHtmlTags/ExtractFirstTwoHtmlTags';
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
 import Link from 'next/link';
+import { useUser } from '@clerk/nextjs';
 
 type BlogsDisplayProps = {
   posts: BlogPostWithCategoriesAndTagsType[];
+  isAdministrator: boolean;
 };
 
-export default function BlogsDisplay({ posts }: BlogsDisplayProps) {
+export default function BlogsDisplay({
+  posts,
+  isAdministrator,
+}: BlogsDisplayProps) {
+  const user = useUser().user;
   return (
     <Tabs
       defaultValue={String(posts[0].id)}
@@ -38,9 +45,9 @@ export default function BlogsDisplay({ posts }: BlogsDisplayProps) {
       <TabsList className="h-full bg-white">
         <Command>
           <CommandInput placeholder="Search posts" />
-          <CommandList className="flex flex-col">
+          <CommandList className="">
             <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup className="flex flex-col">
+            <CommandGroup className="flex flex-col items-center">
               {posts.map(post => (
                 <CommandItem key={post.id}>
                   <TabsTrigger value={String(post.id)}>
@@ -67,7 +74,14 @@ export default function BlogsDisplay({ posts }: BlogsDisplayProps) {
         <TabsContent key={post.id} value={String(post.id)}>
           <Card>
             <CardHeader>
-              <CardTitle>{post.title}</CardTitle>
+              <CardTitle className="flex items-center">
+                {post.title}
+                <BlogActionButtons
+                  post={post}
+                  user={user}
+                  isAdministrator={isAdministrator}
+                />
+              </CardTitle>
               <CardDescription>
                 <small>
                   Written by <strong>{post.author}</strong> on{' '}
