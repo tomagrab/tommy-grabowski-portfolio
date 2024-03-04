@@ -1,5 +1,6 @@
 'use client';
 
+import BlogCategoryAndTags from '@/components/Layout/Blog/BlogCategoryAndTags/BlogCategoryAndTags';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -20,7 +21,9 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
+import { ExtractFirstTwoHtmlTags } from '@/lib/Utilities/ExtractFirstTwoHtmlTags/ExtractFirstTwoHtmlTags';
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
+import Link from 'next/link';
 
 type BlogsDisplayProps = {
   posts: BlogPostWithCategoriesAndTagsType[];
@@ -70,25 +73,26 @@ export default function BlogsDisplay({ posts }: BlogsDisplayProps) {
                   Written by <strong>{post.author}</strong> on{' '}
                   {FormatDate(post.createdAt)}
                 </small>
-                <br />
-                {post.categories.map(category => category.name).join(', ')}
-                <br />
-                {/*
-                 * Put hashtags in front of each tag name and join them with a comma
-                 */}
-                {post.tags.map(tag => `#${tag.name}`).join(', ')}
+                <BlogCategoryAndTags
+                  categories={post.categories}
+                  tags={post.tags}
+                />
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div
-                className="markdown"
+                className="markdown markdown-preview"
                 dangerouslySetInnerHTML={{
-                  __html: ConvertMarkdownToHTML(post.content),
+                  __html: ExtractFirstTwoHtmlTags(
+                    ConvertMarkdownToHTML(post.content),
+                  ),
                 }}
               />
             </CardContent>
             <CardFooter>
-              <Button>Read more</Button>
+              <Link href={`/Blog/${post.id}`}>
+                <Button>Read more</Button>
+              </Link>
             </CardFooter>
           </Card>
         </TabsContent>
