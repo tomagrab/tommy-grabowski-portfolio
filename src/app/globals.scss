@@ -142,5 +142,9 @@
 
   & > pre {
     @apply my-4 whitespace-pre-wrap rounded-lg bg-charcoal p-4 text-white;
+
+    & > code {
+      @apply block whitespace-pre-wrap;
+    }
   }
 }
