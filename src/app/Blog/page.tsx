@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 
 import BlogsDisplay from '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay';
 import { auth } from '@clerk/nextjs/server';
+import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 
 export default async function Blog() {
   const posts = await getAllBlogPosts();
@@ -14,6 +15,15 @@ export default async function Blog() {
   const isAdministrator = has({
     role: 'org:admin',
   });
+
+  if (!posts) {
+    return (
+      <main>
+        <BlogHeader />
+        <p>No posts found</p>
+      </main>
+    );
+  }
 
   return (
     <main>

@@ -32,11 +32,11 @@ export default async function HomeBlog() {
 
           {/* List of ten most recent blogs */}
           <h3 className="pb-4 text-center text-xl font-bold">Recent Blogs</h3>
-          <BlogsDisplay
-            user={user}
-            isAdministrator={isAdministrator}
-            posts={posts}
-          />
+          {posts && posts.length > 0 ? (
+            <BlogsDisplay posts={posts} />
+          ) : (
+            <p>No recent posts found</p>
+          )}
         </CardContent>
       </Card>
     </section>
