@@ -52,6 +52,7 @@ export default function BlogsDisplay({
                 <CommandItem key={post.id}>
                   <TabsTrigger value={String(post.id)}>
                     {post.title}
+                    <div className="hidden">{post.content}</div>
                     <div className="hidden">
                       {post.categories
                         .map(category => category.name)
