@@ -42,7 +42,7 @@ export default async function CategoryPosts({ params }: CategoryPostsProps) {
   return (
     <main>
       <CategoryPostsHeader category={category} />
-      <BlogsDisplay posts={posts} />
+      <BlogsDisplay posts={posts} isAdministrator={isAdministrator} />
     </main>
   );
 }

@@ -42,7 +42,7 @@ export default async function TagPosts({ params }: TagPostsProps) {
   return (
     <main>
       <TagPostsHeader tag={tag} />
-      <BlogsDisplay posts={posts} />
+      <BlogsDisplay posts={posts} isAdministrator={isAdministrator} />
     </main>
   );
 }
