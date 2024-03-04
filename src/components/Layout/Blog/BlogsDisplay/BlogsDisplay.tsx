@@ -40,7 +40,7 @@ export default function BlogsDisplay({
   return (
     <Tabs
       defaultValue={String(posts[0].id)}
-      className="flex flex-col gap-2 md:grid md:auto-cols-[min-content,1fr] md:grid-flow-col md:gap-2"
+      className="flex flex-col gap-2 md:grid md:auto-cols-[min-content_1fr] md:grid-flow-col md:gap-2"
     >
       <TabsList className="h-full bg-white">
         <Command>
@@ -73,8 +73,8 @@ export default function BlogsDisplay({
       {posts.map(post => (
         <TabsContent key={post.id} value={String(post.id)}>
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
+            <CardHeader className="">
+              <CardTitle className="flex items-center justify-between">
                 {post.title}
                 <BlogActionButtons
                   post={post}
