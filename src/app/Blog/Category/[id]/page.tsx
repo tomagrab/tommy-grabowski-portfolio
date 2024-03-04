@@ -30,14 +30,19 @@ export default async function CategoryPosts({ params }: CategoryPostsProps) {
     return notFound();
   }
 
+  if (!posts) {
+    return (
+      <main>
+        <CategoryPostsHeader category={category} />
+        <p>No posts found</p>
+      </main>
+    );
+  }
+
   return (
     <main>
       <CategoryPostsHeader category={category} />
-      <BlogsDisplay
-        user={user}
-        isAdministrator={isAdministrator}
-        posts={posts}
-      />
+      <BlogsDisplay posts={posts} />
     </main>
   );
 }

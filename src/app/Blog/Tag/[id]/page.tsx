@@ -30,14 +30,19 @@ export default async function TagPosts({ params }: TagPostsProps) {
     return notFound();
   }
 
+  if (!posts) {
+    return (
+      <main>
+        <TagPostsHeader tag={tag} />
+        <p>No posts found</p>
+      </main>
+    );
+  }
+
   return (
     <main>
       <TagPostsHeader tag={tag} />
-      <BlogsDisplay
-        user={user}
-        isAdministrator={isAdministrator}
-        posts={posts}
-      />
+      <BlogsDisplay posts={posts} />
     </main>
   );
 }
