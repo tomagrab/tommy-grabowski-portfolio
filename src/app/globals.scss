@@ -113,8 +113,44 @@
     & > li {
       @apply pb-2;
 
+      & > a {
+        @apply text-[#007bff];
+
+        &:hover {
+          @apply text-[#0056b3];
+        }
+      }
+
       & > ol {
         @apply list-decimal py-2 pl-8;
+
+        & > li {
+          @apply pb-2;
+
+          & > a {
+            @apply text-[#007bff];
+
+            &:hover {
+              @apply text-[#0056b3];
+            }
+          }
+
+          & > ul {
+            @apply list-disc py-2 pl-8;
+
+            & > li {
+              @apply pb-2;
+
+              & > a {
+                @apply text-[#007bff];
+
+                &:hover {
+                  @apply text-[#0056b3];
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -125,8 +161,44 @@
     & > li {
       @apply pb-2;
 
+      & > a {
+        @apply text-[#007bff];
+
+        &:hover {
+          @apply text-[#0056b3];
+        }
+      }
+
       & > ul {
         @apply list-disc py-2 pl-8;
+
+        & > li {
+          @apply pb-2;
+
+          & > a {
+            @apply text-[#007bff];
+
+            &:hover {
+              @apply text-[#0056b3];
+            }
+          }
+
+          & > ol {
+            @apply list-decimal py-2 pl-8;
+
+            & > li {
+              @apply pb-2;
+
+              & > a {
+                @apply text-[#007bff];
+
+                &:hover {
+                  @apply text-[#0056b3];
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
