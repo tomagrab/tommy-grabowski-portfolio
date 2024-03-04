@@ -20,7 +20,6 @@ type TagPostsHeaderProps = {
 export default async function TagPosts({ params }: TagPostsProps) {
   const posts = await getBlogPostsByTag(Number(params.id));
   const tag = await getTag(Number(params.id));
-  const user = await currentUser();
   const { has } = auth();
   const isAdministrator = has({
     role: 'org:admin',

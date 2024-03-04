@@ -3,14 +3,16 @@ import BlogsDisplay from '@/components/Layout/Blog/BlogsDisplay/BlogsDisplay';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { getRecentBlogs } from '@/database/prisma';
-import { currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import Link from 'next/link';
 
 export default async function HomeBlog() {
   const posts = await getRecentBlogs(3);
   const user = await currentUser();
-  const isAdministrator =
-    user?.emailAddresses[0]?.emailAddress === process.env.ADMIN_EMAIL;
+  const { has } = auth();
+  const isAdministrator = has({
+    role: 'org:admin',
+  });
 
   return (
     <section>
@@ -33,7 +35,7 @@ export default async function HomeBlog() {
           {/* List of ten most recent blogs */}
           <h3 className="pb-4 text-center text-xl font-bold">Recent Blogs</h3>
           {posts && posts.length > 0 ? (
-            <BlogsDisplay posts={posts} />
+            <BlogsDisplay posts={posts} isAdministrator={isAdministrator} />
           ) : (
             <p>No recent posts found</p>
           )}
