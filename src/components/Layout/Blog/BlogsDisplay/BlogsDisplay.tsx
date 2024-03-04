@@ -63,6 +63,7 @@ export default function BlogsDisplay({
                     </div>
                     <div className="hidden">{post.author}</div>
                     <div className="hidden">{FormatDate(post.createdAt)}</div>
+                    <div className="hidden">{FormatDate(post.updatedAt)}</div>
                   </TabsTrigger>
                 </CommandItem>
               ))}
