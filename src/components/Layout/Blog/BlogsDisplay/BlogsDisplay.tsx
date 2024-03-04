@@ -34,15 +34,14 @@ export default function BlogsDisplay({ posts }: BlogsDisplayProps) {
   return (
     <Tabs
       defaultValue={String(posts[0].id)}
-      className="grid auto-cols-[min-content,1fr]
-    grid-flow-col gap-2"
+      className="flex flex-col gap-2 md:grid md:auto-cols-[min-content,1fr] md:grid-flow-col md:gap-2"
     >
-      <TabsList className="h-full bg-white shadow-md">
+      <TabsList className="h-full bg-white">
         <Command>
           <CommandInput placeholder="Search posts" />
           <CommandList className="flex flex-col">
             <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
+            <CommandGroup className="flex flex-col">
               {posts.map(post => (
                 <CommandItem key={post.id}>
                   <TabsTrigger value={String(post.id)}>
