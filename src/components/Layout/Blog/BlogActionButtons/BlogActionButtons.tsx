@@ -3,14 +3,14 @@
 import '@/components/Layout/Blog/BlogActionButtons/BlogActionButtons.scss';
 import BlogDeleteButton from '@/components/Layout/Blog/BlogDeleteButton/BlogDeleteButton';
 import { Badge } from '@/components/ui/badge';
-import { BlogPost } from '@prisma/client';
 import Link from 'next/link';
 import type { UserResource } from '@clerk/types/dist/user';
+import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 
 type BlogActionButtonsProps = {
   user?: UserResource;
   isAdministrator?: boolean;
-  post: BlogPost;
+  post: BlogPostWithCategoriesAndTagsType;
 };
 
 export default function BlogActionButtons({

@@ -11,20 +11,16 @@ import {
 } from '@/components/ui/card';
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from '@/components/ui/command';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BlogPostWithCategoriesAndTagsType } from '@/lib/Types/BlogPostWithCategoriesAndTagsType/BlogPostWithCategoriesAndTagsType';
 import { ConvertMarkdownToHTML } from '@/lib/Utilities/ConvertMarkdownToHTML/ConvertMarkdownToHTML';
 import { FormatDate } from '@/lib/Utilities/FormatDate/FormatDate';
-import { useState } from 'react';
 
 type BlogsDisplayProps = {
   posts: BlogPostWithCategoriesAndTagsType[];
